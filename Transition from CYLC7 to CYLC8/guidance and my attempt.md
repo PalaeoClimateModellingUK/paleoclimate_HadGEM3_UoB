@@ -10,4 +10,4 @@ In CYLC8 it should be changed to `$CYLC_WORKFLOW_RUN_PATH`
 
 For `config_base` in `fcm_make_*` tasks, the fcm: prefix must now be explicitly specified and can no longer be omitted.
 
-u-dw917 is successfuly run under the framework of CYLC8 now.
+The suite u-dw917 has been successfully transitioned to and run under the CYLC8 framework.
