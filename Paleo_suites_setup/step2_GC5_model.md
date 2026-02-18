@@ -11,7 +11,7 @@ low-resolution configuration(N96 ORCA1):u-do332；u-dv935
 
 ### MONSOON3
 low-resolution configuration(N96 ORCA1):u-du021    
-low-resolution configuration(N96 ORCA1; GC5-central?):u-dv308
+low-resolution configuration(N96 ORCA1; GC5-central?):u-dv308, u-dv344
 
 My copy: u-dv344 (GC5-central)
 
