@@ -1,5 +1,5 @@
 # **Background:**  
-On the PUMA2, the rose and cylc have been well installed. By the **setup** proceeding in step2, we can directly invoke the rose and cylc. This description is just for a deeper understanding of the configuration and workflow of rose&cylc.
+On the PUMA2, the rose and cylc have been well installed. By the **setup** proceeding in `paleoclimate_HadGEM3_UoB/HPC_Accounts/step2`, we can directly invoke the rose and cylc. This description is just for a deeper understanding of the configuration and workflow of rose&cylc.
 ## Installation  
 Note that on the PUMA2, the rose and cylc have been installed already. We can directly use them, without further installation.
 Visit: [Installation of rose&cylc](https://metomi.github.io/rose/doc/html/tutorial/rose/index.html)    
