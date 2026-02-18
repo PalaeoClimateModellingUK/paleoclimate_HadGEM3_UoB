@@ -1,5 +1,5 @@
 # From piControl to Eocene
-In this section, we try to repoduce the Eocene configuration from piControl configuration step by step.
+In this section, we try to reproduce the Eocene configuration from piControl configuration step by step.
 My start point is the piControl suite **u-ch089**, and the destination is the final product run from Seb (**u-di625**).
 ## First attempt (possiblly outdated, start:21/8/2025; final edit: 25/8/2025)
 Target: Make sure the original suite can work with all standard boundary/initial conditions, before making it Eocene .
