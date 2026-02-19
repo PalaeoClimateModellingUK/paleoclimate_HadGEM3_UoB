@@ -165,9 +165,7 @@ As we can see there are two option for extract, and MULE is the prior one. If we
 
 ## From piControl to Eocene on MONSOON3    
 We copy the GC5-central piControl suite u-dv344 as a new suite u-dv769.    
-There are three parts of parameters demand being changed:
-- {path to your suite}/app/install_ancil/rose-app.conf
-- 
+
 ### ancil_list
 Based on the ancil_version scripts of Seb, I try to setup the Eocene ancil_files in u-dv769. However, there is some significant differences in NEMO ancil set bettween the GC3 and GC5 configurations: 
 #### NEMO
@@ -279,7 +277,15 @@ Note: Last two may not be necessary as first two should switch off fluxes and he
         - archive_iceberg_trajectory=true
         - nemo_icebergs_rst=true
 
+### xancil
+For calendar mismatch, we need to regenerate some ancillary files.    
+The `xancil` is the neccessary tool to make it.
+[Official guidance for Xancil](https://ncas-cms.github.io/xancil-doc/singlehtml/index.html#document-download)
 
+Below is the location of the xancil executable on different machine:
+- ARCHER2: `/work/y07/shared/umshared/bin/xancil`
+- MONSOON3: Unknow
+- JASMIN: Ask Charlie?
 
 ## GCOM
 ```
