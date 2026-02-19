@@ -41,7 +41,7 @@ MPICH ERROR [Rank 616] [job id e8932228-88a0-4a1c-8873-793d37b63163] [Fri Dec 12
 ```
 
 The `file_def_nemo_ice.xml` determines the list and frequencies of the variables to be outputed. The variables claimed in the `file_def_nemo_ice.xml` must be defined in the `field_def_nemo-oce.xml`, which is linked from `$CYLC_SUITE_SHARE_DIR/fcm_make_ocean/build-ocean/etc/field_def_nemo-oce.xml` as documented in the `./app/si3/rose-app.conf`.    
-In our suite, we resolve this bug by replace our `domain_def_ice.xml` with that in u-do322, a GC5 suite owned by Xu. In the future, if the internal suite is fully ported to MONSOON3, we may not get this.
+In our suite, we resolve this bug by replace our `file_def_ice.xml` with that in u-do322, a GC5 suite owned by Xu. In the future, if the internal suite is fully ported to MONSOON3, we may not get this.
 
 #### ***no sofwficb in NEMO ancil***   
 
