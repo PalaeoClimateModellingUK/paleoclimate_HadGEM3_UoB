@@ -17,6 +17,9 @@
 - (4) GC5 Eocene (u-dv769): The workflow to produce the ancillaries (in pariticular the missing files highlighted by Zikun)
     - The missing of ancillary files for GC5 Eocene.
       - **status**: waiting for Duncan's responce.
+    - The calendar mismatch.
+      - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
+      - **to do**
 - (5) The "slab/nudged" ocean.
     - setup paleo AMIP experiment.
       - **status**: we are looking for some fixed SST and sea ice distgribution, even the ice sheet.
