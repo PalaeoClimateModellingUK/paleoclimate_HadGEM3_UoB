@@ -9,19 +9,18 @@ MONSOON3 is another HPC that supporting the PAST2FUTURE projects.
 
 ## start-point GC5 suites on MONSOON3
 There is a new suites u-dv308 (GC5-central N96 ORCA1 UM13.8 piControl), which is hosted by EXC and EXD. Here we make a copy of u-dv308 (u-dv344), then revise its rose configuration with the configuration of **u-du021***(MONSOON3 coupling suite) and **u-do322**(ARCGER2 GC5 suite) as a reference.     
-Then we take the revised u-dv344 (GC5-central N96 ORCA1 UM13.8 piControl on monsoon3) as a start-point.
-Note that there is some difference in the configuration of `instal ancil` task between GC3 and GC5.    
+Then we take the revised u-dv344 (GC5-central N96 ORCA1 UM13.8 piControl on monsoon3) as a start-point.  
 
 ### The configuration of GC5
 Note that there is some difference in the configuration of `instal ancil` task between GC3 and GC5.    
-The NEMO and SI output variables can be changed through 
+The NEMO and SI output variables can be changed through `<suite id>/app/si3/file/file_def_nemo-ice.xml` and `<suite id>/app/nemo/file/file_def_nemo-oce.xml`
 
 
 
 ### Debug during the setup of u-dv344
 #### Mismatch of calendar and outputstream
 The default calendar for u-dv344 is **gregorian**, it is different with that for the GC3 Eocene and LGM suites.
-For the gregorian calendar, all the time unit for reinitialisation of the outputstreams (reinit_unit) should be `Real Month(4)`. Or the outputstream with other units can not be generated.
+For the gregorian calendar, all the time unit for reinitialisation of the outputstreams (reinit_unit) should be `Real Month(4)`. Otherwise the outputstream with other units can not be generated.
 Then you may get a error in the <your work directory>/cylc-run/u-dv344/runN/log/job/25001201T0000Z/coupled/NN/job.err as below:
 ```
 ????????????????????????????????????????????????????????????????????????????????
