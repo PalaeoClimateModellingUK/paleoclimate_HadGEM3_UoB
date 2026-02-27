@@ -65,15 +65,16 @@ All your revision commited for the suites or the fcm_resources can be viewed and
 [Trac system for um](https://code.metoffice.gov.uk/trac/um)  
 fcm:um.xm/    
 [Trac system for NEMO](https://code.metoffice.gov.uk/trac/nemo/)   
-fcm:nemo.xm/    
+fcm:nemo.xm/      
 [Trac system for rose suites](https://code.metoffice.gov.uk/trac/roses-u/browser/)   
-control by rosie    
+control by rosie      
 [Trac system for Met Office Coupling Infrastructure MOCI](https://code.metoffice.gov.uk/trac/moci/)    
-fcm:moci.xm/    
+fcm:moci.xm/     
 [Trac system for GCOM](https://code.metoffice.gov.uk/trac/gcom/)    
-fcm:gcom.xm/
-[Trac system for GCOM](https://code.metoffice.gov.uk/trac/jules/)        
-fcm:jules.xm/
+fcm:gcom.xm/    
+[Trac system for JULES](https://code.metoffice.gov.uk/trac/jules/)        
+fcm:jules.xm/    
+[Some other documents](https://code.metoffice.gov.uk/doc/)
 
 ### Some useful command
 - fcm ls fcm:um.x-br/    
