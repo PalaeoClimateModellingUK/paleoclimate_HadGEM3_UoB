@@ -67,9 +67,9 @@ fcm:um.xm/
 [Trac system for NEMO](https://code.metoffice.gov.uk/trac/nemo/)   
 fcm:nemo.xm/      
 [Trac system for rose suites](https://code.metoffice.gov.uk/trac/roses-u/browser/)   
-control by rosie      
+control by `rosie`      
 [Trac system for Met Office Coupling Infrastructure MOCI](https://code.metoffice.gov.uk/trac/moci/)    
-fcm:moci.xm/     
+fcm:moci.xm/     find the `meta` files here
 [Trac system for GCOM](https://code.metoffice.gov.uk/trac/gcom/)    
 fcm:gcom.xm/    
 [Trac system for JULES](https://code.metoffice.gov.uk/trac/jules/)        
