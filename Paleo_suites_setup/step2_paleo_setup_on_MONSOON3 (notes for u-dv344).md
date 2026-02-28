@@ -390,6 +390,40 @@ the old version restart file didn't ouptput `neos`. In additon, the default Equa
 - Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
 - set `LOGICAL       ::   ln_rst_eos= .FALSE.       !: check equation of state used for the restart is consistent with model` in the src of NEMO `src/nemo/src/OCE/IOM/in_out_manager.F90`
 
+### ice_rst_read: you are attempting to use an unsuitable ice restart
+```
+  ===>>> : W A R N I N G
+
+          ===============
+
+ ice_rst_read: you are attempting to use an unsuitable ice restart
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ STOP
+ ice_rst_read: you need ln_ice_ini=T and nn_iceini_file=0 or 1
+
+
+ huge E-R-R-O-R : immediate stop
+```
+
+it is possiblly caused by the inconsistence bettween cice restart file and si3 restart file.     
+related source codes:
+```
+   INTEGER, PUBLIC  ::   nn_iceini_file   !: Ice initialization:
+                                  !        0 = Initialise sea ice based on SSTs
+                                  !        1 = Initialise sea ice from single category netcdf file
+                                  !        2 = Initialise sea ice from multi category restart file
+```
+**resolution**:      
+set the `nn_iceini_file` as 0 at `si3 > namelist > namini` 
+
+
+
+
 
 ## GCOM
 ```
