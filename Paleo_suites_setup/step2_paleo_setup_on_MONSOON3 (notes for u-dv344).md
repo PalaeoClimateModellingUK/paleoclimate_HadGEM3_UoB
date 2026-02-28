@@ -390,7 +390,7 @@ the old version restart file didn't ouptput `neos`. In additon, the default Equa
 - Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
 - set `LOGICAL       ::   ln_rst_eos= .FALSE.       !: check equation of state used for the restart is consistent with model` in the src of NEMO `src/nemo/src/OCE/IOM/in_out_manager.F90`
 
-### ice_rst_read: you are attempting to use an unsuitable ice restart
+#### ice_rst_read: you are attempting to use an unsuitable ice restart
 ```
   ===>>> : W A R N I N G
 
@@ -421,8 +421,73 @@ related source codes:
 **resolution**:      
 set the `nn_iceini_file` as 0 at `si3 > namelist > namini` 
 
+#### dia_hsb_init: iom_varid, file: ./restart.nc, var: * not found
+```
+ dia_hsb_init : heat and salt budgets diagnostics
+ ~~~~~~~~~~~~
+    Namelist  namhsb :
+       check the heat and salt budgets (T) or not (F)       ln_diahsb =  T
+
+    dia_hsb_rst : read hsb restart at it=  1  date=  32010101
 
 
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: frc_v not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: frc_t not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: frc_s not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: surf_ini not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: ssh_ini not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: e3t_ini not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: hc_loc_ini not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: sc_loc_ini not found
+```
+**resolution**     
+switch off `ln_diahsb` at `nemo > namelist > diagnostics > Heat and Sait budgets`
 
 
 ## GCOM
