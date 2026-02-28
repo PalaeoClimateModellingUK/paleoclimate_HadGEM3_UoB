@@ -364,6 +364,12 @@ Below is the location of the xancil executable on different machine:
 - MONSOON3: Unknow
 - JASMIN: Ask Charlie?
 
+
+### remapping weights (coupling weights; in progressing)
+Now we use the GC3.1 remmaping files and GC3.1 namcouple for GC5 run (u-dv769).   
+In the future, we should replace it by the new coupling weights
+
+
 ### DEBUG
 
 #### potential calendar mismatch
