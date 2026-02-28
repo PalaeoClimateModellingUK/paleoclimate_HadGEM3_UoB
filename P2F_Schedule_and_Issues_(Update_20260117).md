@@ -16,7 +16,12 @@
       - **to do**: use it as a start point of the Eocene suite setup.
 - (4) GC5 Eocene (u-dv769): The workflow to produce the ancillaries (in pariticular the missing files highlighted by Zikun)
     - The missing of ancillary files for GC5 Eocene.
-      - **status**: waiting for Duncan's responce.
+      - **status**: waiting for Duncan's responce; attempt to run the model with old ancillary files;     
+        Lists of modification:
+        - neos
+        - lateral diffusion: 3d to constant viscosity
+        - calendar
+        - rnf_coupling_method: 1d to 2d
     - The calendar mismatch.
       - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
       - **to do**
