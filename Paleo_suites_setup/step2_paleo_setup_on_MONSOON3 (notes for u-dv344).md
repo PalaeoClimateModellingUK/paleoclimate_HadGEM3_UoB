@@ -166,30 +166,6 @@ As we can see there are two option for extract, and MULE is the prior one. If we
 ## From piControl to Eocene on MONSOON3    
 We copy the GC5-central piControl suite u-dv344 as a new suite u-dv769.    
 
-### DEBUG
-
-#### potential calendar mismatch
-please check the dump and meaning and the **time profiles of the STASH**.
-
-#### variable neos not found
-```
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: neos not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- restart, rst_read: variable neos not found. STOP check that the equations of state in the restart file and in the namelist nameos are consistent and use ln_rst_eos=F
-```
-the old version restart file didn't ouptput `neos`. In additon, the default Equation of State is different between GC3 (nn_eos='polynomial EOS-80') and GC5(nn_eos='polynomial TEOS-10').
-**resolution1**:    
-Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
 
 ### ancil_list
 Based on the ancil_version scripts of Seb, I try to setup the Eocene ancil_files in u-dv769. However, there is some significant differences in NEMO ancil set bettween the GC3 and GC5 configurations: 
@@ -387,6 +363,33 @@ Below is the location of the xancil executable on different machine:
 - ARCHER2: `/work/y07/shared/umshared/bin/xancil`
 - MONSOON3: Unknow
 - JASMIN: Ask Charlie?
+
+### DEBUG
+
+#### potential calendar mismatch
+please check the dump and meaning and the **time profiles of the STASH**.
+
+#### variable neos not found
+```
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: neos not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ restart, rst_read: variable neos not found. STOP check that the equations of state in the restart file and in the namelist nameos are consistent and use ln_rst_eos=F
+```
+the old version restart file didn't ouptput `neos`. In additon, the default Equation of State is different between GC3 (nn_eos='polynomial EOS-80') and GC5(nn_eos='polynomial TEOS-10').
+**resolution**:    
+- Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
+- set `LOGICAL       ::   ln_rst_eos= .FALSE.       !: check equation of state used for the restart is consistent with model` in the src of NEMO `src/nemo/src/OCE/IOM/in_out_manager.F90`
+
 
 ## GCOM
 ```
