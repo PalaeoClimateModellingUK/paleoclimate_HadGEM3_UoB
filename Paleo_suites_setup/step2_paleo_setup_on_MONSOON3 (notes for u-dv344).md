@@ -166,8 +166,30 @@ As we can see there are two option for extract, and MULE is the prior one. If we
 ## From piControl to Eocene on MONSOON3    
 We copy the GC5-central piControl suite u-dv344 as a new suite u-dv769.    
 
-### potential calendar mismatch
+### DEBUG
+
+#### potential calendar mismatch
 please check the dump and meaning and the **time profiles of the STASH**.
+
+#### variable neos not found
+```
+
+  ===>>> : E R R O R
+
+          ===========
+
+ iom_varid, file: ./restart.nc, var: neos not found
+
+
+  ===>>> : E R R O R
+
+          ===========
+
+ restart, rst_read: variable neos not found. STOP check that the equations of state in the restart file and in the namelist nameos are consistent and use ln_rst_eos=F
+```
+the old version restart file didn't ouptput `neos`. In additon, the default Equation of State is different between GC3 (nn_eos='polynomial EOS-80') and GC5(nn_eos='polynomial TEOS-10').
+**resolution1**:    
+Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
 
 ### ancil_list
 Based on the ancil_version scripts of Seb, I try to setup the Eocene ancil_files in u-dv769. However, there is some significant differences in NEMO ancil set bettween the GC3 and GC5 configurations: 
