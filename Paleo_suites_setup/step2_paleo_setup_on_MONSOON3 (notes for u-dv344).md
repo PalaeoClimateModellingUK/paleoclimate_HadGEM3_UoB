@@ -388,7 +388,21 @@ please check the dump and meaning and the **time profiles of the STASH**.
 the old version restart file didn't ouptput `neos`. In additon, the default Equation of State is different between GC3 (nn_eos='polynomial EOS-80') and GC5(nn_eos='polynomial TEOS-10').
 **resolution**:    
 - Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
-- set `LOGICAL       ::   ln_rst_eos= .FALSE.       !: check equation of state used for the restart is consistent with model` in the src of NEMO `src/nemo/src/OCE/IOM/in_out_manager.F90`
+- delete the code block about the Eos check     
+```
+301       IF ( ln_rst_eos ) THEN
+302          ! Check equation of state used is consistent with the restart
+303          IF( iom_varid( numror, 'neos') == -1) THEN
+304             CALL ctl_stop( 'restart, rst_read: variable neos not found. STOP check that the equations of state in the restart file and     in the namelist nameos are consistent and use ln_rst_eos=F')
+305          ELSE
+306             CALL iom_get( numror, 'neos', zeos, ldxios = lrxios )
+307             IF ( INT(zeos) /= neos ) CALL ctl_stop( 'restart, rst_read: equation of state used in restart file differs from namelist n    ameos')
+308          ENDIF
+309       ENDIF
+```
+in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
+To modify it, `fcm co` the NEMO src to the local, then modify it. andd apply it to `nemo_sources` at `fcm_make_ocean > env > NEMO and SI3 Sources`.   
+In the near future, make a FCM branch for this modification.
 
 #### ice_rst_read: you are attempting to use an unsuitable ice restart
 ```
@@ -489,6 +503,8 @@ set the `nn_iceini_file` as 0 at `si3 > namelist > namini`
 **resolution**     
 switch off `ln_diahsb` at `nemo > namelist > diagnostics > Heat and Sait budgets`
 
+#### misspelled variable in namelist namdrg in configuration namelist iostat =  4324
+Comparing the u-dv344 (PI) and u-dv769, I found the differences stem from the auto-fix of **rose editor Gui**. Double check before following the auto-fix reminder
 
 ## GCOM
 ```
