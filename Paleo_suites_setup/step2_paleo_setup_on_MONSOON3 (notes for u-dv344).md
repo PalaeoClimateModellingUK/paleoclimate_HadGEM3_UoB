@@ -512,6 +512,14 @@ switch off `ln_diahsb` at `nemo > namelist > diagnostics > Heat and Sait budgets
 #### misspelled variable in namelist namdrg in configuration namelist iostat =  4324
 Comparing the u-dv344 (PI) and u-dv769, I found the differences stem from the auto-fix of **rose editor Gui**. Double check before following the auto-fix reminder
 
+#### lib-4411 : UNRECOVERABLE library error
+```
+lib-4411 : UNRECOVERABLE library error
+  An allocatable array in the ALLOCATE statement is already allocated.
+```
+no idea with it. It may be caused by the old version NEMO or UM restart file?
+
+
 ## GCOM
 ```
 fcm co fcm:gcom.xm_br/dev/andymalcolm/vn7.5_meto_ex1a_configs ./vn7.5
