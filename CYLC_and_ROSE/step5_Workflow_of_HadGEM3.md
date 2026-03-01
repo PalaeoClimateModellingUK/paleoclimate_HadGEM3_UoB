@@ -74,7 +74,10 @@ fcm:moci.xm/     find the `meta` files here
 fcm:gcom.xm/    
 [Trac system for JULES](https://code.metoffice.gov.uk/trac/jules/)        
 fcm:jules.xm/    
+[Trac system for ancil](https://code.metoffice.gov.uk/trac/ancil)
 [Some other documents](https://code.metoffice.gov.uk/doc/)
+
+[Further keywords of Trac](https://github.com/metomi/metomi-vms/blob/master/opt/metomi-site/etc/fcm/keyword.cfg)
 
 ### Some useful command
 - fcm ls fcm:um.x-br/    
