@@ -517,7 +517,8 @@ Comparing the u-dv344 (PI) and u-dv769, I found the differences stem from the au
 lib-4411 : UNRECOVERABLE library error
   An allocatable array in the ALLOCATE statement is already allocated.
 ```
-no idea with it. It may be caused by the old version NEMO or UM restart file?
+**tentative resolution**    
+When we set the `namcouple` and `remaping weights` as in the PI, This error disappear.
 
 
 ## GCOM
