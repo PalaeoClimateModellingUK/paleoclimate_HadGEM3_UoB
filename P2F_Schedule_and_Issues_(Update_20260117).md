@@ -25,6 +25,9 @@
     - The calendar mismatch.
       - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
       - **to do**
+    - lib-4411 : UNRECOVERABLE library error:
+      - **status**: The same configurations but one runs(u-dv344) successfully and the other(u-dv769_med_dv344) shows error as the title.
+      - **plan**(in processing): copy the files in u-dv769_med_dv344 to the u-dv344 (make the u-dv344_cp_dv769_med then run it as `u-dv344`), see what will happen.
 - (5) The "slab/nudged" ocean.
     - setup paleo AMIP experiment.
       - **status**: we are looking for some fixed SST and sea ice distgribution, even the ice sheet.
