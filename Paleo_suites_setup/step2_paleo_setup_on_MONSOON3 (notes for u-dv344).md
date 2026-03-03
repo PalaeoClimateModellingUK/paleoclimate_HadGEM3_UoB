@@ -407,12 +407,33 @@ the old version restart file didn't ouptput `neos`. In additon, the default Equa
 307             IF ( INT(zeos) /= neos ) CALL ctl_stop( 'restart, rst_read: equation of state used in restart file differs from namelist n    ameos')
 308          ENDIF
 309       ENDIF
-```
-in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
+```    in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
 To modify it, `fcm co` the NEMO src to the local and modify ithe local resource, then apply it to `nemo_sources` at `fcm_make_ocean > env > NEMO and SI3 Sources`.   
-In the near future, I will make a FCM branch for this modification.
+In the near future, I will make a FCM branch for this modification.    
+- exclude `toce_con`, `soce_abs`... etc. from the `app/nemo/file/file_def_nemo-oce.xml`
+as denoted by the source codes of NEMO:
+```
+      IF( kt == nit000 ) THEN
+         IF( ln_TEOS10 ) THEN
+            ! toce_pot, sst_pot and tosmint_pot diagnostics, converted from conservative temperature, are output by
+            ! dia_ar5 as part of the base NEMO code- do not raise an error if these are requested.
+            IF ( iom_use("soce_pra") .OR. iom_use("sss_pra") .OR. iom_use("sbt_pot") .OR. iom_use("sbs_pra") .OR. &
+               & iom_use("sstgrad_pot") .OR. iom_use("sstgrad2_pot") .OR. iom_use("somint_pra"))  THEN
+               CALL ctl_stop( 'diawri: potential temperature and practical salinity not available with ln_TEOS10' )
+            ELSE
+               ttype='con' ; stype='abs'   ! teos-10 using conservative temperature and absolute salinity
+            ENDIF
+         ELSE IF( ln_EOS80  ) THEN
+            IF ( iom_use("toce_con") .OR. iom_use("soce_abs") .OR. iom_use("sst_con") .OR. iom_use("sss_abs") &
+                  & .OR. iom_use("sbt_con") .OR. iom_use("sbs_abs") .OR. iom_use("sstgrad_con") .OR. iom_use("sstgrad2_con") &
+                  & .OR. iom_use("tosmint_con") .OR. iom_use("somint_abs"))  THEN
+               CALL ctl_stop( 'diawri: conservative temperature and absolute salinity not available with ln_EOS80' )
+            ELSE
+               ttype='pot' ; stype='pra'   ! eos-80 using potential temperature and practical salinity
+            ENDIF
+```
 
-####  diawri: conservative temperature and absolute salinity not available with ln_EOS80
+#### diawri: conservative temperature and absolute salinity not available with ln_EOS80
 `ocean_output`
 ```
  ===>>> : E R R O R
@@ -421,7 +442,31 @@ In the near future, I will make a FCM branch for this modification.
 
  diawri: conservative temperature and absolute salinity not available with ln_EOS80
 ```
-This error seems to occur for the inconsistency between `EOS80` and `diawri`. It should be note that we use the 
+This error seems to occur for the inconsistency between `EOS80` and `diawri`.
+**resolution:**     
+Below is the relevant source codes: `src/nemo/src/OCE/DIA/diawri.F90`
+```
+      IF( kt == nit000 ) THEN
+         IF( ln_TEOS10 ) THEN
+            ! toce_pot, sst_pot and tosmint_pot diagnostics, converted from conservative temperature, are output by
+            ! dia_ar5 as part of the base NEMO code- do not raise an error if these are requested.
+            IF ( iom_use("soce_pra") .OR. iom_use("sss_pra") .OR. iom_use("sbt_pot") .OR. iom_use("sbs_pra") .OR. &
+               & iom_use("sstgrad_pot") .OR. iom_use("sstgrad2_pot") .OR. iom_use("somint_pra"))  THEN
+               CALL ctl_stop( 'diawri: potential temperature and practical salinity not available with ln_TEOS10' )
+            ELSE
+               ttype='con' ; stype='abs'   ! teos-10 using conservative temperature and absolute salinity
+            ENDIF
+         ELSE IF( ln_EOS80  ) THEN
+            IF ( iom_use("toce_con") .OR. iom_use("soce_abs") .OR. iom_use("sst_con") .OR. iom_use("sss_abs") &
+                  & .OR. iom_use("sbt_con") .OR. iom_use("sbs_abs") .OR. iom_use("sstgrad_con") .OR. iom_use("sstgrad2_con") &
+                  & .OR. iom_use("tosmint_con") .OR. iom_use("somint_abs"))  THEN
+               CALL ctl_stop( 'diawri: conservative temperature and absolute salinity not available with ln_EOS80' )
+            ELSE
+               ttype='pot' ; stype='pra'   ! eos-80 using potential temperature and practical salinity
+            ENDIF
+```
+We should exclude `toce_con`, `soce_abs`... etc. from the `app/nemo/file/file_def_nemo-oce.xml`
+
 
 #### ice_rst_read: you are attempting to use an unsuitable ice restart
 ```
