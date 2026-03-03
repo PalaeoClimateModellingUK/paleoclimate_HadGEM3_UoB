@@ -22,6 +22,7 @@
         - lateral diffusion: 3d to constant viscosity
         - calendar
         - rnf_coupling_method: 1d to 2d
+        - ln_EOS80 and ln_TEOS10
     - The calendar mismatch.
       - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
       - **to do**
