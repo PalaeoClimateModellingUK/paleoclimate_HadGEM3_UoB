@@ -18,11 +18,11 @@
     - The missing of ancillary files for GC5 Eocene.
       - **status**: waiting for Duncan's responce; attempt to run the model with old ancillary files;     
         Lists of modification:
-        - neos
+        - neos: ln_EOS80 and ln_TEOS10
         - lateral diffusion: 3d to constant viscosity
-        - calendar
+        - calendar: 360day or Gregorian
         - rnf_coupling_method: 1d to 2d
-        - ln_EOS80 and ln_TEOS10
+        - remapping weights (coupling weights): GC3 or GC5
     - The calendar mismatch.
       - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
       - **to do**
