@@ -460,51 +460,6 @@ set the `nn_iceini_file` as 0 at `si3 > namelist > namini`
 
   ===>>> : E R R O R
 
-          ===========
-
- iom_varid, file: ./restart.nc, var: frc_t not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: frc_s not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: surf_ini not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: ssh_ini not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: e3t_ini not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: hc_loc_ini not found
-
-
-  ===>>> : E R R O R
-
-          ===========
-
- iom_varid, file: ./restart.nc, var: sc_loc_ini not found
 ```
 **resolution**     
 switch off `ln_diahsb` at `nemo > namelist > diagnostics > Heat and Sait budgets`
@@ -521,6 +476,19 @@ and the UM output blocked after the step `Reading spectral files` where should b
 **resolution**    
 Keep `{your rose suite}/app/coupled/file` only contain one `namcouple`. I encountered it because I left some other versions of `namcouple` in this directory.
 
+#### runoff mismatch between namcouple and namelist
+debug.root.03 
+```
+(oasis_init_comp) OASIS RUNNING 
+(oasis_init_comp) OPEN debug file for pe, unit : 0 9999 
+(oasis_coupler_setup) ERROR: namcouple variable not used: runoffa
+(oasis_abort) ABORT: file = /home/users/harry.shepherd/cylc-run/infrastructure_suite_deploy_login.exa.sc/share/oasis3-mct/lib/psmile/src/mod_oasis_coupler.F90
+(oasis_abort) ABORT: line = 1150
+(oasis_abort) ABORT: on model = xios.x
+(oasis_abort) ABORT: on global rank = 186
+(oasis_abort) ABORT: on local rank = 0
+(oasis_abort) ABORT: CALLING ABORT FROM OASIS LAYER NOW
+```
 ## GCOM
 ```
 fcm co fcm:gcom.xm_br/dev/andymalcolm/vn7.5_meto_ex1a_configs ./vn7.5
