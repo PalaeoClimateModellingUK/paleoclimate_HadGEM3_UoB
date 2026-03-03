@@ -54,7 +54,10 @@
 
 
 ### Suites_Table for test:
-
+| suite-id | remapping weight | lateral diffusion | neos |calendar | rnf_coupling_mod |---- |
+| -------- | --------- | ---- | ---- | ---- |---- |---- |
+| cn502    | GC5-PI | constat | ln_EOS80 | gregorian | 2d |
+|          |           |                                                         |
 
 ### Optional (can be engaged in when blocked in P2F)
 #### HadGEM3-GC3 work
