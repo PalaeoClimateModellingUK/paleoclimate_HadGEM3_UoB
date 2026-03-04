@@ -547,6 +547,42 @@ debug.root.03
 (oasis_abort) ABORT: on local rank = 0
 (oasis_abort) ABORT: CALLING ABORT FROM OASIS LAYER NOW
 ```
+**resolution**
+check the `app/coupled/file/namcouple`. For 2D method, the {your rose suite}/app/coupled/file/namcouple should include the codes below:
+```
+668 ############################################################################
+669 # No longer reverse the sign of runoff
+670 # TRANSDEF: ATMT OCNT 58 3 1 ######################################################
+671  runoff model01_O_Runoff 32 10800 1 atmos_restart.nc   EXPORTED
+672  192 144 362 332 atm3 tor1 SEQ=+2
+673  P  0  P  2
+674 #
+675  MAPPING
+676 #
+677  rmp_atm3_to_tor1_CONSERV_DESTAREA.nc
+678 #
+679 ############################################################################
+```
+#### empty output stream id
+```
+Contents of namelist nlstcall_pp
+reinit_end   = 0
+reinit_step  = 30
+reinit_start = 0
+reinit_unit  = 2
+filename_base    =
+reserved_headers = 0
+packing  = 0
+l_reinit = F
+filename =
+file_id  =
+- - - - - - end of namelist - - - - - -
+FILE_MANAGER: Assigned :
+FILE_MANAGER:          : id   :
+FILE_MANAGER:          : Unit :  18 (portio)
+```ls
+**resolution:**
+check the **nlstcall_pp** at `app/um/rose-app.conf`. Please also check the files in `opt`
 ## GCOM
 ```
 fcm co fcm:gcom.xm_br/dev/andymalcolm/vn7.5_meto_ex1a_configs ./vn7.5
