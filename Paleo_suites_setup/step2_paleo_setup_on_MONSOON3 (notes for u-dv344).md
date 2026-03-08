@@ -260,7 +260,7 @@ To remove the dependence of the NEMO on the `river_number_nemo.nc`. We checked t
  570          IF(lwp) WRITE(numout,*) '   runoffs received from oasis -> force ln_rnf = ', ln_rnf
  571       ENDIF
 ```
-So, change the `description` slot of `sn_rcv_rnf` from `coupled1d` to `coupled` at `nemo > namelist > surface boundary condition`    
+So, change the `description` slot of `sn_rcv_rnf` from `coupled1d` to `coupled` at `nemo > namelist > surface boundary condition > Coupled Forcing (namsbc_cpl)`    
 
 - **STEP2 coupler side**:     
 As documented at **16.2** in the [umdp_C02 of vn13.8](https://code.metoffice.gov.uk/doc/um/vn13.8/papers/umdp_C02.pdf), the method for passing runoff information from UM to NEMO through OASIS3-MCT differs between the 1D and 2D approaches.
