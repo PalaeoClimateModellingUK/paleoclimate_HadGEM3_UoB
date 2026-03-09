@@ -408,7 +408,8 @@ the old version restart file didn't ouptput `neos`. In additon, the default Equa
 307             IF ( INT(zeos) /= neos ) CALL ctl_stop( 'restart, rst_read: equation of state used in restart file differs from namelist n    ameos')
 308          ENDIF
 309       ENDIF
-```    in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
+```
+in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
 To modify it, `fcm co` the NEMO src to the local and modify ithe local resource, then apply it to `nemo_sources` at `fcm_make_ocean > env > NEMO and SI3 Sources`.   
 In the near future, I will make a FCM branch for this modification.    
 - exclude `toce_con`, `soce_abs`... etc. from the `app/nemo/file/file_def_nemo-oce.xml`
@@ -581,7 +582,7 @@ file_id  =
 FILE_MANAGER: Assigned :
 FILE_MANAGER:          : id   :
 FILE_MANAGER:          : Unit :  18 (portio)
-```ls
+```
 **resolution:**
 check the **nlstcall_pp** at `app/um/rose-app.conf`. Please also check the files in `opt`
 
