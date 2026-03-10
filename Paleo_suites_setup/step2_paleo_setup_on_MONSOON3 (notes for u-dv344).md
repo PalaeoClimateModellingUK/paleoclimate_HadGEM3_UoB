@@ -615,6 +615,13 @@ switch off reconfiguration, and set astart = /work/n02/n02/jgrist02/cylc-run/rei
 
 We will investigate why the reconfiguration mishandles 11.6 files.    
 
+#### sbc_isf_init: wrong value of nn_isf
+This error occured when I set the `nn_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)` as **0**, which is recommended by Charlie.    
+It seems to stem from the Fortran code was changed from if statements to case statements in the new NEMO version, and there is no `case (0)`
+
+**resolution:**
+To sort it out, I modified the source codes. I add a `case (0)` in the source codes. In `case (0)`, we do nothing but print `No ice cavities or associated freshwater fluxes`
+
 ## GCOM
 ```
 fcm co fcm:gcom.xm_br/dev/andymalcolm/vn7.5_meto_ex1a_configs ./vn7.5
