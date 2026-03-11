@@ -82,6 +82,10 @@ see [A error about ssh to svi machine of JASMIN](https://cms-helpdesk.ncas.ac.uk
 ### [Python on JASMIN](https://help.jasmin.ac.uk/docs/software-on-jasmin/conda-environments-and-python-virtual-environments/) 
 module load jaspy
 
+### [mule on JASMIN](https://help.jasmin.ac.uk/docs/software-on-jasmin/conda-environments-and-python-virtual-environments/) 
+module load ants
+
+
 ### link stash codes with variable name
 searcher
 
