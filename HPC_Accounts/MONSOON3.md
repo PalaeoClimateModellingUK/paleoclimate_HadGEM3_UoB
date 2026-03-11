@@ -24,5 +24,10 @@ Resize and/or reshape jobs. This may not always be possible, but if you are over
  
 Split a larger job into smaller jobs. Like above, if you have a job that requests ten nodes for two hours, but the job can be split into two where one job requests three nodes for half an hour and the other seven nodes for an hour, throughput should be better.    
  
-Offload jobs that do not require a full compute node to a shared node. You may find this particularly beneficial for archiving jobs and jobs that use MASS.      
+Offload jobs that do not require a full compute node to a shared node. You may find this particularly beneficial for archiving jobs and jobs that use MASS.
+
+### Tips
+#### Mule and iris on MONSOON3
+`module load scitools um_tools`     
+[The guidance for mule](https://metoffice.github.io/mule/mule/index.html)
  
