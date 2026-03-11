@@ -27,3 +27,8 @@ ARCHER2 is the UK’s national supercomputing service, designed to support high-
   ssh -i ~/.ssh/id_rsa_archer2 an25872@login.archer2.ac.uk
   ```
   Or you can login by MOBAXterm
+
+  # Tips
+  ## Mule on archer2
+  `module load cray-python`
+  
