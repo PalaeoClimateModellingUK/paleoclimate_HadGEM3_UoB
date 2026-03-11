@@ -591,7 +591,15 @@ check the **nlstcall_pp** at `app/um/rose-app.conf`. Please also check the files
 #### Error message: WRITHEAD: Addressing conflict
 Break at the end of first month
 ```
-????????????????????????????????????????????????????????????????????????????????
+5251 FIELD DEPENDENT CONSTANTS
+5252 12348 64-bit words long
+5253 ******FATAL ERROR WHEN READING MODEL DUMP******
+5254 Conflict between start position of lookup table
+5255 Block and Pointer in Fixed Length Header: fixhd(150) =    25725
+5256 Current position in file =    13377 words in
+5257 ***********************************************
+5258
+5259????????????????????????????????????????????????????????????????????????????????
 5260 ???!!!???!!!???!!!???!!!???!!!       ERROR        ???!!!???!!!???!!!???!!!???!!!
 5261 ?  Error code: 24
 5262 ?  Error from routine: WRITHEAD
@@ -608,10 +616,7 @@ Break at the end of first month
 
 ```
 **resolution:**
-[relative reply](https://cms-helpdesk.ncas.ac.uk/t/cancelled-due-to-time-limit/1084/17?u=an25872):
-u-cn134 is the latest CANARI suite – however, it is set up to reconfigure and run from a UM 10.6 start file - I believe u-cy520 is set up the same way, but is reconfiguring a UM 11.6 start file. That is the cause of the error you see. The work around is to not reconfigure /work/n02/n02/jgrist02/cylc-run/reinhard_restarts/cw475a.da19501001_00.    
- 
-switch off reconfiguration, and set astart = /work/n02/n02/jgrist02/cylc-run/reinhard_restarts/cw475a.da19501001_00    
+[a ticket for the identical issue](https://code.metoffice.gov.uk/trac/um/ticket/3616)
 
 We will investigate why the reconfiguration mishandles 11.6 files.    
 
@@ -620,7 +625,7 @@ This error occured when I set the `nn_isf` at `nemo > namelist > Surface Boundar
 It seems to stem from that the Fortran code was changed from 'if' statements to 'case' statements in the new NEMO version, and there is no `case (0)`
 
 **resolution:**
-To sort it out, switch off the ice shelves module by `ln_isf` at `nemo > namelist > Surface Boudary Condition (namsbc)`
+switch off the ice shelves module by `ln_isf` at `nemo > namelist > Surface Boudary Condition (namsbc)`
 
 ## GCOM
 ```
