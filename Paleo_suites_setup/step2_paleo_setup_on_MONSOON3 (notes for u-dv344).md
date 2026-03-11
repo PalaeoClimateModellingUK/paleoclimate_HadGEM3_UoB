@@ -617,6 +617,7 @@ Break at the end of first month
 ```
 **resolution:**
 [a ticket for the identical issue](https://code.metoffice.gov.uk/trac/um/ticket/3616)
+[Set IntC( IC_Stochastic_flag ) to 7 in recon to force correct dump header](https://code.metoffice.gov.uk/trac/um/changeset/109053#file0)
 
 We will investigate why the reconfiguration mishandles 11.6 files.    
 
