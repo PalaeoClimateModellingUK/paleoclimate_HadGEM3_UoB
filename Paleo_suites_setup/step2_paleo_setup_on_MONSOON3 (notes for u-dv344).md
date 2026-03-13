@@ -620,14 +620,12 @@ Break at the end of first month
 
 My diagnostics based on the source codes of UM vn13.8:     
 During the model run:
-1. **atm_step_4A** (in ./control/top_level/atm_step_4A.F90)：    
-This subroutine will call `allocate_sp_coefficients` or `assign_a_flddepc_input_values` (both in ./src/control/dump_io/dump_headers_mod.F90) depending on the relative size of `a_inthd(ih_stochastic_flag)`(`ih_stochastic_flag` is set to 29 at ./src/control/dump_io/dump_headers_mod.F90, a_inthd is the property `integer_constants` in the FieldsFile read by MULE, check `ff.integer_constants.raw[29]` of your dunp) and `stph_seed_present` (set as `1` in `./src/atmosphere/stochastic_physics/stochastic_physics_run_mod.F90`).
-If the `allocate_sp_coefficients` is called, which means `ff.integer_constants.raw[29]`<=1, the model will directly recalcilate the field of constants, and add their size to fixhd(150).    
-Otherwise, the `assign_a_flddepc_input_values` will be called, which means `ff.integer_constants.raw[29]`>1, the model will assign a array named `a_flddepc` according to which stochastic physics schemes are specified at runtime, and **here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
-3. allocate_sp_coefficients incorrectly updates a_fixhd(150) (the start index of the lookup table), effectively writing it twice.     
-4. Later, dumpctl (in ./src/control/top_level/dumpctl.F90) calls um_writdump (in ./src/control/dump_io/um_writdump.F90).    
-5. um_writdump uses the global a_fixhd as its local fixhd argument and calls writhead (in ./src/control/dump_io/writhead.F90).    
-6. Inside writhead, fixhd(150) is checked against start_block. Due to the earlier double write, the values do not match, triggering an error.    
+- at the first timestep of UM, the subroutine **atm_step_4A** (in ./control/top_level/atm_step_4A.F90; which run every UM step) will call `allocate_sp_coefficients` or `assign_a_flddepc_input_values` (both in ./src/control/dump_io/dump_headers_mod.F90) depending on the relative size of `a_inthd(ih_stochastic_flag)`(`ih_stochastic_flag` is set to 29 at ./src/control/dump_io/dump_headers_mod.F90, a_inthd is the property `integer_constants` in the FieldsFile read by MULE, check `ff.integer_constants.raw[29]` of your dunp) and `stph_seed_present` (set as `1` in `./src/atmosphere/stochastic_physics/stochastic_physics_run_mod.F90`).
+- If the `allocate_sp_coefficients` is called, which means `ff.integer_constants.raw[29]`<=1, the model will directly recalcilate the field of constants, and add their size to fixhd(150). Otherwise, the `assign_a_flddepc_input_values` will be called, which means `ff.integer_constants.raw[29]`>1, the model will remove the old `size of the field of constants`(a_fixhd(126)) from the a_fixhd(150) and add the new size to it.
+- In the old UM dump, the `ff.integer_constants.raw[29]` is set as 1. Therefore the `allocate_sp_coefficients` is used. Which caused the surplus add of the `a_fixhd(126)` to the a_fixhd(150).
+- Later, dumpctl (in ./src/control/top_level/dumpctl.F90) calls um_writdump (in ./src/control/dump_io/um_writdump.F90).    
+- um_writdump uses the global a_fixhd as its local fixhd argument and calls writhead (in ./src/control/dump_io/writhead.F90).    
+- Inside writhead, fixhd(150) is checked against start_block. Due to the earlier double write, the values do not match, triggering an error.    
 ```
 atm_step_4A
      └─> allocate_sp_coefficients
@@ -640,8 +638,6 @@ dumpctl
                     └─> error triggered if mismatch
 ```
 !!!!!!!! the length of the SP section is added to fixhd(150) by `./src/control/dump_io/dump_headers_mod.F90`    
-
-We will investigate why the reconfiguration mishandles 11.6 files.    
 
 #### sbc_isf_init: wrong value of nn_isf
 This error occured when I set the `nn_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)` as **0**, which is recommended by Charlie.    
