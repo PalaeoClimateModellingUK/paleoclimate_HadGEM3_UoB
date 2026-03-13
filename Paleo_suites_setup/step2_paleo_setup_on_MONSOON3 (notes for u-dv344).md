@@ -618,6 +618,24 @@ Break at the end of first month
 [a ticket for the identical issue](https://code.metoffice.gov.uk/trac/um/ticket/3616)     
 [Set IntC( IC_Stochastic_flag ) to 7 in recon to force correct dump header](https://code.metoffice.gov.uk/trac/um/changeset/109053#file0)     
 
+My diagnostics based on the source codes of UM vn13.8:     
+During the model run:
+1. atm_step_4A (in ./control/top_level/atm_step_4A.F90) calls allocate_sp_coefficients (in ./src/control/dump_io/dump_headers_mod.F90).    
+2. allocate_sp_coefficients incorrectly updates a_fixhd(150) (the start index of the lookup table), effectively writing it twice.     
+3. Later, dumpctl (in ./src/control/top_level/dumpctl.F90) calls um_writdump (in ./src/control/dump_io/um_writdump.F90).    
+4. um_writdump uses the global a_fixhd as its local fixhd argument and calls writhead (in ./src/control/dump_io/writhead.F90).    
+5. Inside writhead, fixhd(150) is checked against start_block. Due to the earlier double write, the values do not match, triggering an error.    
+```
+atm_step_4A
+     └─> allocate_sp_coefficients
+          └─> updates a_fixhd(150) incorrectly
+dumpctl
+     └─> um_writdump
+          ├─> receives a_fixhd as fixhd
+          └─> writhead
+               └─> checks fixhd(150) vs start_block
+                    └─> error triggered if mismatch
+```
 !!!!!!!! the length of the SP section is added to fixhd(150) by `./src/control/dump_io/dump_headers_mod.F90`    
 
 We will investigate why the reconfiguration mishandles 11.6 files.    
