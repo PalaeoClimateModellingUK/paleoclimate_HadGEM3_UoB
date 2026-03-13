@@ -620,11 +620,14 @@ Break at the end of first month
 
 My diagnostics based on the source codes of UM vn13.8:     
 During the model run:
-1. atm_step_4A (in ./control/top_level/atm_step_4A.F90) calls allocate_sp_coefficients (in ./src/control/dump_io/dump_headers_mod.F90).    
-2. allocate_sp_coefficients incorrectly updates a_fixhd(150) (the start index of the lookup table), effectively writing it twice.     
-3. Later, dumpctl (in ./src/control/top_level/dumpctl.F90) calls um_writdump (in ./src/control/dump_io/um_writdump.F90).    
-4. um_writdump uses the global a_fixhd as its local fixhd argument and calls writhead (in ./src/control/dump_io/writhead.F90).    
-5. Inside writhead, fixhd(150) is checked against start_block. Due to the earlier double write, the values do not match, triggering an error.    
+1. **atm_step_4A** (in ./control/top_level/atm_step_4A.F90)：    
+This subroutine will call `allocate_sp_coefficients` or `assign_a_flddepc_input_values` (both in ./src/control/dump_io/dump_headers_mod.F90) depending on the relative size of `a_inthd(ih_stochastic_flag)`(`ih_stochastic_flag` is set to 29 at ./src/control/dump_io/dump_headers_mod.F90, a_inthd is the property `integer_constants` in the FieldsFile read by MULE, check `ff.integer_constants.raw[29]` of your dunp) and `stph_seed_present` (set as `1` in `./src/atmosphere/stochastic_physics/stochastic_physics_run_mod.F90`).
+If the `allocate_sp_coefficients` is called, which means `ff.integer_constants.raw[29]`<=1, the model will directly recalcilate the field of constants, and add their size to fixhd(150).    
+Otherwise, the `assign_a_flddepc_input_values` will be called, which means `ff.integer_constants.raw[29]`>1, the model will assign a array named `a_flddepc` according to which stochastic physics schemes are specified at runtime, and **here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!**
+3. allocate_sp_coefficients incorrectly updates a_fixhd(150) (the start index of the lookup table), effectively writing it twice.     
+4. Later, dumpctl (in ./src/control/top_level/dumpctl.F90) calls um_writdump (in ./src/control/dump_io/um_writdump.F90).    
+5. um_writdump uses the global a_fixhd as its local fixhd argument and calls writhead (in ./src/control/dump_io/writhead.F90).    
+6. Inside writhead, fixhd(150) is checked against start_block. Due to the earlier double write, the values do not match, triggering an error.    
 ```
 atm_step_4A
      └─> allocate_sp_coefficients
