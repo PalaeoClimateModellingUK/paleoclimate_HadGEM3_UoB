@@ -114,13 +114,12 @@ There are two ouput stream (pz, po). Note that, the content of pz is set by the 
 
 
 
-
-#####  On the first time stamp, Required data since NRun not found on disk: Year: 2501 Months: 1,2,3,4,5,6,7,8,9,10,11,12
+##### Debuggubg
+######  On the first time stamp, Required data since NRun not found on disk: Year: 2501 Months: 1,2,3,4,5,6,7,8,9,10,11,12
 
 For Ozone scheme, the basis timestamp must be the {start_year}0101, so that the ozone initialization can proceed correctly.
 
-
-#####  On the second year, Required data since NRun not found on disk: Year: 2501 Months: 1,2,3,5,6,8,9,11  
+######  On the second year, Required data since NRun not found on disk: Year: 2501 Months: 1,2,3,5,6,8,9,11  
 
 On the first month of the second year, the outputs of `po` outputstream is incomplete with a few monthes lacked.
 
