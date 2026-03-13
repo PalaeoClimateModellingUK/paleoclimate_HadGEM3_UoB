@@ -637,7 +637,8 @@ dumpctl
                └─> checks fixhd(150) vs start_block
                     └─> error triggered if mismatch
 ```
-!!!!!!!! the length of the SP section is added to fixhd(150) by `./src/control/dump_io/dump_headers_mod.F90`    
+
+To resolve the issue, use the `mule` to modify the ff.integer_constants.raw[29] as a integer larger than 1 (for example:7).
 
 #### sbc_isf_init: wrong value of nn_isf
 This error occured when I set the `nn_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)` as **0**, which is recommended by Charlie.    
