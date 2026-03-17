@@ -48,7 +48,7 @@ firstly, set a globus link as described below
 (https://cms.ncas.ac.uk/unified-model/pptransfer-globus/)
 
 secondly, to get through the task `fcm_make_pp_jasmin`, copy you ssh-key of JASMIN to the PUMA2. 
-and set a config file as in the page [login-servers](https://help.jasmin.ac.uk/docs/interactive-computing/login-servers/)
+and set a config file as in the page [login-servers](https://help.jasmin.ac.uk/docs/interactive-computing/login-servers/)     
 my config set:
 ```
 Host login-*
@@ -68,7 +68,7 @@ Host sci-vm-*
 ### DEBUG ###
 task:fcm_make_pp_jasmin in GC5
 ```
-  1 [FAIL] sci-vm-01:cylc-run/u-ds758/run9/share/fcm_make_pp_jasmin: cannot create mirror ta    rget
+  1 [FAIL] sci-vm-01:cylc-run/u-ds758/run9/share/fcm_make_pp_jasmin: cannot create mirror target
   2 [FAIL] ssh -n -oBatchMode=yes sci-vm-01 pwd # rc=255
   3 [FAIL] ssh: Could not resolve hostname sci-vm-01: Name or service not known^M
   4
@@ -87,7 +87,6 @@ module load ants
 
 
 ### link stash codes with variable name
-searcher
 
 download the STASH CODE TABLE here(https://reference.metoffice.gov.uk/um/release/_9.1)
 https://reference.metoffice.gov.uk/um/stash/_<stash_code_you_want_to_know>
