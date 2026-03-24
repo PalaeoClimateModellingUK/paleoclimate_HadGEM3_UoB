@@ -208,7 +208,9 @@ Below is the location of the xancil executable on different machine:
 
 
 ### remapping weights (coupling weights; in progressing)
-Now we use the GC3.1 remmaping files and GC3.1 namcouple for GC5 run (u-dv769).   
+now
+- use the modern remmaping files. (run successfully for one month, crash at second month)
+- use the GC3.1 remmaping files and GC3.1 namcouple for GC5 run (u-dv769).   (don't work, missing variables)
 In the future, we should replace it by the new coupling weights
 
 
