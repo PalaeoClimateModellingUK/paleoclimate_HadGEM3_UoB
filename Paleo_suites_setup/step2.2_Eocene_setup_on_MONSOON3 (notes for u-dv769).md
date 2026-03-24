@@ -478,6 +478,14 @@ dumpctl
 ```
 
 To resolve the issue, use the `mule` to modify the ff.integer_constants.raw[29] as a integer larger than 1 (for example:7).
+```
+import mule
+ff=mule.UMFile.from_file("cz006a.da24010101_00")
+ff.fixed_length_header.raw[29]=7
+ff.to_file("cz006a.da24010101_00_header_modified")
+```
+
+
 
 #### sbc_isf_init: wrong value of nn_isf
 This error occured when I set the `nn_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)` as **0**, which is recommended by Charlie.    
