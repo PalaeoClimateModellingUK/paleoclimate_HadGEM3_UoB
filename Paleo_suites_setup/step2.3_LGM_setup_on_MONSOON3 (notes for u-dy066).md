@@ -15,3 +15,10 @@ Instead, we make use of the `qraclim.veg.frac` and `qrparm.veg.func` on the JASM
 ```
 ##### 2.1.2.b qrclim.smow and qrclim.slt (new ancil files)
 These two files stores some soil-related fields: soil moisture, deep soil temperature and snow depth. In the suite now, these variables will be directly read from the restart dump. However, if you wanna spinup from the begining, it should be inserted into the suite, by : `um > namelist > Reconfiguration and ancillary control > Configure ancils`…
+
+### 3.2 Model Physics
+This suite is built based on the Eocene suite. Contrast with Eocene, LGM have some important ice processes. therefore, we should take on some switch.
+#### 3.2.1 ice shelves.
+switch on the `ln_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)`
+#### 3.2.2 iceberg
+switch on the `ln_icebergs` at `nemo > namelist > Surface Boundary Conditions (namsbc) > Iceberg settings (namberg)`
