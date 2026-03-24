@@ -174,6 +174,9 @@ These ancils seem to document fixed areosols by different vertical levels. We ma
 This ancil file domucment the Mean Topographic Index and STANDARD DEVN IN TOPOGRAPHIC INDEX, which influence the average wetness tendency of a grid cell and the sub-grid heterogeneity of soil moisture, respectively. They may be used in the JULES.   
 In the GC3.1, the two variables in the files is set as constants.    
 **resolution**: We set these variables as constants with the ancils management toolkit `Configure ancils and initialise dump fields` at `um > namelist > Reconfiguration and Ancillary Control`.
+##### 2.1.2.j qrclim.smow and qrclim.slt (new ancil files)
+These two files stores some soil-related fields: soil moisture, deep soil temperature and snow depth. In the suite now, these variables will be directly read from the restart dump. However, if you wanna spinup from the begining, it should be inserted into the suite, by : `um > namelist > Reconfiguration and ancillary control > Configure ancils`…
+
 
 ### Switch off some scheme based on information about present-day bathymetry (Copy from [Idiot's guide to setting up GC3.1 Eocene suite on NEXCS v3.docx](https://uob-my.sharepoint.com/:w:/g/personal/wb19586_bristol_ac_uk/EcIwjv71mMFDgCKJqzcjB_oBGmRss2O40IxQPvVG6BF4xw?e=vgAmjN)):
 - Ocean ancils used by the standard model are listed below - first 4 are based on information about present-day bathymetry which can’t be replicated for the Eocene, so just switch off spatially varying parts of these schemes:
