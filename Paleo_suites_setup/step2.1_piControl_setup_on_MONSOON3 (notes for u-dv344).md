@@ -112,7 +112,7 @@ In the `redistribute_ozone` task, The python script `src/contrib/redistribute_oz
 - On the UM
 There are two ouput stream (pz, po). Note that, the content of pz is set by the switch `suite conf > Ozone Restribution > Redistribuition ozone`. In the GUI of `Rose config-edit`, the stash request of pz will show to be empty. But after installation of suite, the UM Optional key (ozone) will add two variables (DENSITY*R*R AFTER TIMESTEP 00253, the tropopause_altitude 30453) in it. In the `postproc` task (function do_ozone in the script `share/fcm_make_pp/build/bin/atmos.py`), the two variables will be extracted to the `po` outputstream. And `po` will be the source outputstream to generate the OZONE ancil for the next year.
 
-**notes:** If you are going to continue an existing run, which already produced a few years' outputs, you'd better also change the initial ozone ancillary to the newest updated one.
+**notes:** If you plan to continue an existing run (with ozone scheme open) that has already produced several years of output, it would be better to also update the initial ozone ancillary to the latest version.
 
 
 ##### Debuggubg
