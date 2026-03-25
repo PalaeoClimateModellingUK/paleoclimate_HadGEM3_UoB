@@ -483,7 +483,7 @@ To resolve the issue, use the `mule` to modify the ff.integer_constants.raw[29] 
 ```
 import mule
 ff=mule.UMFile.from_file("cz006a.da24010101_00")
-ff.fixed_length_header.raw[29]=7
+ff.integer_constants.raw[29]=7
 ff.to_file("cz006a.da24010101_00_header_modified")
 ```
 
