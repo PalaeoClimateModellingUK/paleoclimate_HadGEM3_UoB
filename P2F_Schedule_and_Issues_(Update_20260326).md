@@ -27,6 +27,7 @@
 - (2) GC3 LGM (on archer2):
     - The coupling weights are required so that we can run the LGM correctly.    
       - **status**: coupling weight are being made in house by MO.
+    - <mark>Try to reinitialize the LGM suite with Seb's initial profile.</mark>   
     - Zikun is trying to refine the domain decomposition and make it run more efficienctly.
       - **status**: 1152 cores are used for running on ARCHER2. (Speed: six model years per day)
       - **to do**: output more information by uplift the level of `$NLOGPRT`
