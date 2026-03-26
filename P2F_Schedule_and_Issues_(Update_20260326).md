@@ -1,4 +1,25 @@
-### Issues on the schedule (update on 18/02/2026)
+### Issues on the schedule (update on 26/03/2026)
+#### Plan A (setup GC5 for tuning):
+- (1) GC5 PI :
+    - official piControl.    
+      - **status**: waiting for Met Office to port it to MONSOON3.
+
+- (2) GC5 Eocene (u-dv769): The workflow to produce the ancillaries (in pariticular the missing files highlighted by Zikun)
+    - The missing of ancillary files for GC5 Eocene.
+      - **status**: waiting for Duncan's responce; attempt to run the model with old ancillary files;     
+        Lists of modification:
+        - neos: ln_EOS80 and ln_TEOS10
+        - lateral diffusion: 3d to constant viscosity
+        - calendar: 360day or Gregorian
+        - rnf_coupling_method: 1d to 2d
+        - remapping weights (coupling weights): GC3 or GC5
+- (3) GC5 LGM (u-dy066)
+    - <mark>the black sea high SSH (over 400meter).</mark>
+      - **status**: coupled task crash during the runstat check;     
+      - **to do**: try to find the reason underlying the high SSH;     
+
+      
+#### Plan B (setup GC3 for tuning):
 - (1) GC3 PI (on MONSOON3; u-dw345):
     - Dead Lock with MPI and `Error message: ADDR_CHK : Mis-match in start addresses` with one core UM
       - **to do**: switch the model outputs informaiton to the top-level;
@@ -9,27 +30,17 @@
     - Zikun is trying to refine the domain decomposition and make it run more efficienctly.
       - **status**: 1152 cores are used for running on ARCHER2. (Speed: six model years per day)
       - **to do**: output more information by uplift the level of `$NLOGPRT`
-        
-- (3) GC5 PI (u-dv344):
-    - (ARCHER2 GC5-unknown version) try to restart u-do332
-      - **status**: in processing
-      - **to do**: use it as a start point of the Eocene suite setup.
-- (4) GC5 Eocene (u-dv769): The workflow to produce the ancillaries (in pariticular the missing files highlighted by Zikun)
-    - The missing of ancillary files for GC5 Eocene.
-      - **status**: waiting for Duncan's responce; attempt to run the model with old ancillary files;     
-        Lists of modification:
-        - neos: ln_EOS80 and ln_TEOS10
-        - lateral diffusion: 3d to constant viscosity
-        - calendar: 360day or Gregorian
-        - rnf_coupling_method: 1d to 2d
-        - remapping weights (coupling weights): GC3 or GC5
-    - The calendar mismatch.
-      - **status**: The calendar of the PI suite is gregorian, but the restart file from GC3.1 suite and some existing ancillary files are 360-day. This mismatch leads to error.
-      - **to do**
-    - lib-4411 : UNRECOVERABLE library error:
-      - **status**: The same configurations but one runs(u-dv344) successfully and the other(u-dv769_med_dv344) shows error as the title.
-      - **plan**(in processing): copy the files in u-dv769_med_dv344 to the u-dv344 (make the u-dv344_cp_dv769_med then run it as `u-dv344`), see what will happen.
-- (5) The "slab/nudged" ocean.
+      - 
+#### Plan C (setup atmosphere-only suite for tuning):
+- (1) GA PI:
+    - <mark>GA7.1 amip suite id</mark>
+      - **to do**: find it by the rosie or Trac, or raise a question on the NCAS forum to ask for it.
+                  
+- (2) GA LGM:
+- (3) GA EOCENE:
+
+#### Others
+- (1) The "slab/nudged" ocean.
     - setup paleo AMIP experiment.
       - **status**: we are looking for some fixed SST and sea ice distgribution, even the ice sheet.
       - **to do**: looking for collaboration with paleo data assimilation group.
@@ -42,15 +53,24 @@
       - **results**: run successfully after switching off the postproc_integrity.
     - (MONSOON3 GC5-central) model explosion after five months' running
       - **results**: Zikun fixed it by renewing the ancils
+    - (ARCHER2 GC5-unknown version) try to restart u-do332
+      - **results**: Done
+
 - (2) GC3 LGM (on archer2):
     - The coupling weights are required so that we can run the LGM correctly.    
       - **status**: mesh file need to be generated (a example for Eocene: /home/users/an25872/pmip4_vol2/users/ssteinig/gc31/ancils/Eocene/final_ancils_charlie_round2/ocean/bathy；    
       Kenji's resources for LGM:/home/users/an25872/pmip4_vol2/users/kizumi/HadGEM3_boundary_data/projects/peltier6g/N96_eORCA1_v2.2x)
       - **results**: Zikun generated it by using the DOMAINcfg tools.
+
 - (3) GC5 Eocene (u-dv769): The workflow to produce the ancillaries (in pariticular the missing files highlighted by Zikun)
     - The missing of ancillary files for GC5 Eocene.
       - **status**: domain_cfg.nc is demanded to be generated.
       - **results**: Zikun generated it by using the DOMAINcfg tools.
+    - The calendar mismatch.
+      - **results**: The calendar of the Eocene suite is set to 360day now.
+    - lib-4411 : UNRECOVERABLE library error:
+      - **results**: resolution: [Keep {your rose suite}/app/coupled/file only contain one namcouple](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/main/Paleo_suites_setup/step2.2_Eocene_setup_on_MONSOON3%20(notes%20for%20u-dv769).md#lib-4411--unrecoverable-library-error)
+
 
 
 ### Suites_Table for test:
