@@ -36,6 +36,8 @@
 - (1) GA PI:
     - <mark>GA7.1 amip suite id</mark>
       - **to do**: find it by the rosie or Trac, or raise a question on the NCAS forum to ask for it.
+    - <mark>the GA suite id for GC5 central tuning</mark>
+      -**to do**: Contact john.rostron@metoffice.gov.uk to get the suite ID
                   
 - (2) GA LGM:
 - (3) GA EOCENE:
