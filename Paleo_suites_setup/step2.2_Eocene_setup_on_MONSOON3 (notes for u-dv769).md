@@ -373,7 +373,7 @@ Comparing the u-dv344 (PI) and u-dv769, I found the differences stem from the au
 lib-4411 : UNRECOVERABLE library error
   An allocatable array in the ALLOCATE statement is already allocated.
 ```
-and the UM output blocked after the step `Reading spectral files` where should be `Allocating runoff_points`
+and the UM output blocked after the step `Reading spectral files` where should be `Allocating runoff_points`      
 **resolution**    
 Keep `{your rose suite}/app/coupled/file` only contain one `namcouple`. I encountered it because I left some other versions of `namcouple` in this directory.
 
