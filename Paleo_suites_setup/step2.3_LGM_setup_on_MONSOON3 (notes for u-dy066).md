@@ -22,3 +22,5 @@ This suite is built based on the Eocene suite. Contrast with Eocene, LGM have so
 switch on the `ln_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)`
 #### 3.2.2 iceberg
 switch on the `ln_icebergs` at `nemo > namelist > Surface Boundary Conditions (namsbc) > Iceberg settings (namberg)`
+#### 3.2.3 orbital parameter(!!!!!!!!!not changed yet)
+#### 3.2.4 green house gases(!!!!!!!!!not changed yet)
