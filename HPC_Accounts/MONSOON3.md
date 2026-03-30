@@ -28,6 +28,6 @@ Offload jobs that do not require a full compute node to a shared node. You may f
 
 ### Tips
 #### Mule and iris on MONSOON3
-`module load scitools um_tools`     
+`module load scitools`     
 [The guidance for mule](https://metoffice.github.io/mule/mule/index.html)
  
