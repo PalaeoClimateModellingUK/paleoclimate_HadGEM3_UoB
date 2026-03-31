@@ -1,5 +1,5 @@
 ## start-point suite on MONSOON3: u-dr521 and  u-cn480
-u-dr521 is a GAL9 suite on the internal platform of Meo Office. Take this as a start point, I copy it as **u-dy179**.
+u-dr521 is a GAL9 suite on the internal platform of Met Office. Take this as a start point, I copy it as **u-dy179**.
 There is some necessary modification on the configuration to make it runnable on MONSOON3.
 
 ### Testing fails
