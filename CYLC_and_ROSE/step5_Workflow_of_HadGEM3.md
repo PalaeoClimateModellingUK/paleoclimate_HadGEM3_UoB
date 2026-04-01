@@ -74,8 +74,8 @@ fcm:moci.xm/     find the `meta` files of `nemo` here
 fcm:gcom.xm/    
 [Trac system for JULES](https://code.metoffice.gov.uk/trac/jules/)        
 fcm:jules.xm/    
-[Trac system for ancil](https://code.metoffice.gov.uk/trac/ancil)
-[Some other documents](https://code.metoffice.gov.uk/doc/)
+[Trac system for ancil](https://code.metoffice.gov.uk/trac/ancil)      
+[All the documents](https://code.metoffice.gov.uk/doc/)
 
 [Further keywords of Trac](https://github.com/metomi/metomi-vms/blob/master/opt/metomi-site/etc/fcm/keyword.cfg)
 [project list](https://code.metoffice.gov.uk/trac/home/wiki/ProjectList)
