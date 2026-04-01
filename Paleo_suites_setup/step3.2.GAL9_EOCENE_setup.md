@@ -62,3 +62,22 @@ EM_GET_TIME_REC: File starts 1970  1  1  0  0  0   709200        0
 ?  Error number: 22
 ????????????????????????????????????????????????????????????????????????????????
 ```
+This error stem from the time dimension mismatch between the ancils, **UKCA** and **easyaerosol** possibly.      
+**resolution**:    
+change the easyareosol related ancils from history to climatology. For example:      
+from:
+```
+[file:$ROSE_DATA/etc/ancil_easyaerosol/volc_aer_absorption_lw.nc]
+mode=symlink+
+source=${UM_ANCIL_DIR}/${ATMOS}/easyaerosol/cmip6_stratos/historical_1850-2014/v1/volc_aer_absorption_lw.nc
+```
+to:
+```
+[file:$ROSE_DATA/etc/ancil_easyaerosol/volc_aer_absorption_lw.nc]
+mode=symlink+
+source=${UM_ANCIL_DIR}/${ATMOS}/easyaerosol/cmip6_stratos/climatology_1850-2014/v1/volc_aer_absorption_lw.nc
+```
+
+
+
+
