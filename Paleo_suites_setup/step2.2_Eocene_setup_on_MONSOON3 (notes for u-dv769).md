@@ -158,7 +158,7 @@ There is some ancil seems to be fixed impcat on radiation of the areosol. Will i
 For UM, there are two ancils requreid: `qrparm.rivseq` and `river_number_um`. The Eocene `qrparm.rivseq` have been applied in GC3, but no `river_number_um` yet.    
 **resolution:** please see **2.1.1.c**
 ##### 2.1.2.d qrclim.rivstor riverstorage (new ancil file)
-Only for GC5. Switch it off in the configuration?
+According to guidance from Charlie. Rivstorage can will spin-up quickly, so just initialize it to zero at `um > namelist > Reconfiguration and Ancillary Control`
 ##### 2.1.2.e Ozone (potential element)
 The dealing of ozone is different in the set of Charlie and Seb. In the Charlie's configuraation it is taken from UKESM1 4xCO2 monthly climatology (85 levels), and zonally palaeotise at every month/level. In contrast, in the Seb's suite, it is calculated by interactive ozone scheme.     
 Note that, the ozone scheme is not correctly set in our GC5 suite. Here we simply set it as a PI zonal-mean field. In the future, examine the ozone output to check whether it is used (07/01/2026).    
