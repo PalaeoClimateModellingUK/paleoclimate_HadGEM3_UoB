@@ -1,8 +1,14 @@
 ## 3. From EOCENE to LGM on MONSOON3   
 ### 3.1 ancil_list
 #### 3.1.1 NEMO
+##### 3.1.1.a domain_cfg.nc (configuration change)
+Closed sea need some specific disposal in NEMO. For present day, the disposal is applied to Caspian sea.
+In the LGM the black sea is also closed. for this reason, we need to apply the closed sea disposal also to the black sea.
+It seems to can be set in the namelist of DOMAINcfg. **Still in proceeding...**
+
+
 #### 3.1.2 UM
-##### 2.1.2.a  qrclim.veg.frac and (potential element)    
+##### 3.1.2.a qrclim.veg.frac and (potential element)    
 Don't have the permission to visit the following two pathes on ARCHER2.
 ```
 /work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/vegetation/fractions_igbp/PILGM4     
