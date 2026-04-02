@@ -44,7 +44,7 @@
 - (2) GAL LGM:
    - SST forcing collecting
       - **to do:** contact the people, who was working on the recontruction of LGM SST and seaice
-      - **name list:** Zhu Feng(contact Xin Ren for email adress); Matt Osman; 
+      - **name list:** Feng Zhu(fengzhu@ucar.edu); Matt Osman; 
 - (3) GAL EOCENE:
    - 
 
