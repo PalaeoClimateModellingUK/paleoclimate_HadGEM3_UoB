@@ -33,15 +33,19 @@
       - **to do**: output more information by uplift the level of `$NLOGPRT`
       - 
 #### Plan C (setup atmosphere-only suite for tuning):
-- (1) GA PI:
+- (1) GAL PI:
     - <mark>GA7.1 amip suite id</mark>
       - **to do**: find it by the rosie or Trac, or raise a question on the NCAS forum to ask for it.
     - <mark>the GA suite id for GC5 central tuning</mark>
       -**to do**: Contact john.rostron@metoffice.gov.uk to get the suite ID
     -  <mark>Read 'A clearer view of systematic errors in model development: two practical approaches using perturbed parameter ensembles'</mark>
                   
-- (2) GA LGM:
-- (3) GA EOCENE:
+- (2) GAL LGM:
+   - SST forcing collecting
+      - **to do:** contact the people, who was working on the recontruction of LGM SST and seaice
+      - **name list:** zhang feng(contact Xin Ren for email adress); Matt Osman; 
+- (3) GAL EOCENE:
+   - 
 
 #### Others
 - (1) The "slab/nudged" ocean.
