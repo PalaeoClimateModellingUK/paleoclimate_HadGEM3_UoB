@@ -15,8 +15,9 @@
         - remapping weights (coupling weights): GC3 or GC5
 - (3) GC5 LGM (u-dy066)
     - <mark>the black sea high SSH (over 400meter).</mark>
-      - **status**: coupled task crash during the runstat check;     
-      - **to do**: try to find the reason underlying the high SSH;     
+      - **status**: 1. coupled task crash during the runstat check;
+          2. the high SSH seems to be due to not applying the closed-sea disposal during the generation of NEMO grids.      
+      - **to do**: learn more about the closed-sea disposal in domainCFG;     
 
       
 #### Plan B (setup GC3 for tuning):
