@@ -1,4 +1,4 @@
-### Issues on the schedule (update on 26/03/2026)
+### Issues on the schedule (update on 02/04/2026)
 #### Plan A (setup GC5 for tuning):
 - (1) GC5 PI :
     - official piControl.    
