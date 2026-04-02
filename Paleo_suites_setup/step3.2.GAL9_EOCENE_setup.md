@@ -1,6 +1,11 @@
 ## start-point: **u-dy179**
 I copied the AMIP suite **u-dy179** as **u-dy316**. Then make some changes on the suite **u-dy316**.
 
+### changes
+#### UM namelist
+By comparing the UM namelist of u-dv769 (EOCENE coupling) and u-dy179, we find the following parameters demanding changes.
+##### Switch off varying Greenhouse Gases
+switch it off by `l_clmchfcg` at `um > namelist > UM Science Settings > Section 01 -02 - Radiation > Gas MMRs > Varying gas MMRs`.
 
 ### DEBUG
 #### Gamma integral should be positive and non-zero.
