@@ -199,8 +199,9 @@ Note: Last two may not be necessary as first two should switch off fluxes and he
 ### xancil
 For calendar mismatch, we need to regenerate some ancillary files.    
 The `xancil` is the neccessary tool to make it.
-[Official guidance for Xancil](https://ncas-cms.github.io/xancil-doc/singlehtml/index.html#document-download)
-
+[Official guidance for Xancil](https://ncas-cms.github.io/xancil-doc/singlehtml/index.html#document-download)    
+`mkancil < xancil.namelis`
+`xancil -j xancil_example.job -x`
 Below is the location of the xancil executable on different machine:
 - ARCHER2: `/work/y07/shared/umshared/bin/xancil`
 - MONSOON3: Unknow
