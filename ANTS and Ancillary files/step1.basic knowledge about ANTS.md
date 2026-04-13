@@ -14,7 +14,6 @@ workflow exists in contrib to enable routine testng of the ancillary science rou
 (Apps) as core library updates are made.
 
 ## How to use ANTS?
-ANTS has been installed on JASMIN. Use `module load ants` to load the ANTS.     
 Follow the [Git-Hub page of ANTS install](https://github.com/MetOffice/ANTS/blob/edff7e6bcfe22dead0480a67977169dfb15fdd37/INSTALL.rst#L34) to setup the ANTS.    
 [cylc and rose on JASMIN](https://help.jasmin.ac.uk/docs/workflow-management/rose-cylc-on-jasmin/): `export PATH=/apps/jasmin/metomi/bin:$PATH`    
 [ANTS on JASMIN(Reading)](https://research.reading.ac.uk/landsurfaceprocesses/software-examples/ants_on_jasmin/)     
@@ -23,5 +22,7 @@ Follow the [Git-Hub page of ANTS install](https://github.com/MetOffice/ANTS/blob
 
 For the MetOffice's codes transition from FCM to Git. There are actually two group of coding resources. One on [Trac system](https://code.metoffice.gov.uk/trac/home/wiki/ProjectList) and the other on the [GitHub](https://github.com/MetOffice/). Some internal resources on GitHub are still only accessible to MetOffice staff, Therefore, if we want to access these resources (like the `ancillary-file-science` highlighted by the guidance) we still need to turn to [the ancil documentation page on the Trac system](https://code.metoffice.gov.uk/doc/ancil/ants/2.2/index.html).
 
-### run ANTS on ARCHER2
+### ANTS on JASMIN
+ANTS has been installed on JASMIN. Use `module load ants` to load the ANTS.  
+[structure of ANTS python module](https://metoffice.github.io/ANTS/_modules/)
 
