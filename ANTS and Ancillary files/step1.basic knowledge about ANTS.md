@@ -25,4 +25,7 @@ For the MetOffice's codes transition from FCM to Git. There are actually two gro
 ### ANTS on JASMIN
 ANTS has been installed on JASMIN. Use `module load ants` to load the ANTS.  
 [structure of ANTS python module](https://metoffice.github.io/ANTS/_modules/)
+ancil directory on JASMIN:`/gws/nopw/j04/umshared/umshared/ancil`
 
+### ANTS on ARCHER2
+u-by395
