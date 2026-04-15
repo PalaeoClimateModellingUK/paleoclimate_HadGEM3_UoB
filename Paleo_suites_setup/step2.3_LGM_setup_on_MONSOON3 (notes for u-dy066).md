@@ -1,10 +1,11 @@
-## 3. From EOCENE to LGM on MONSOON3   
+## 3. From EOCENE to LGM on MONSOON3  
+u-dy066 (coupling LGM suite) is copied from the Eocene suite (u-dv769)
 ### 3.1 ancil_list
 #### 3.1.1 NEMO
 ##### 3.1.1.a domain_cfg.nc (configuration change)
 Closed sea need some specific disposal in NEMO. For present day, the disposal is applied to Caspian sea.
 In the LGM the black sea is also closed. for this reason, we need to apply the closed sea disposal also to the black sea.
-It seems to can be set in the namelist of DOMAINcfg. **Still in proceeding...**
+It seems to be able to be set in the namelist of DOMAINcfg. **Still in proceeding...**
 
 
 #### 3.1.2 UM
@@ -28,5 +29,10 @@ This suite is built based on the Eocene suite. Contrast with Eocene, LGM have so
 switch on the `ln_isf` at `nemo > namelist > Surface Boundary Conditions (namsbc)`
 #### 3.2.2 iceberg
 switch on the `ln_icebergs` at `nemo > namelist > Surface Boundary Conditions (namsbc) > Iceberg settings (namberg)`
-#### 3.2.3 orbital parameter(!!!!!!!!!not changed yet)
+#### 3.2.3 orbital parameter(!!!!!!!in progressing)
+Kenji set the orbital parameter by modifying the source codes, and I find a switch in the new version of UM to make it easier.    
+[The tickes authored by Alison McLaren](https://code.metoffice.gov.uk/trac/um/wiki/ticket/7847/TicketDetails).     
+`l_calc_orbprm_year` at `um > namelist > UM Science Settings > Shortwave`
+But this seem to be only work for UM of `vn13.9`. 
+
 #### 3.2.4 green house gases(!!!!!!!!!not changed yet)
