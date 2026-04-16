@@ -9,6 +9,12 @@ switch it off by `l_clmchfcg` at `um > namelist > UM Science Settings > Section 
 ##### AMIP-II method of updating SST and seaice (still not sure)
 `um > namelist > Reconfiguration and Ancillary Control > Ancil options > l_amipii_ice_processing`
 ##### ozone scheme (not opened yet)
+#### ancillary files
+##### SST_and_seaice
+I remade and apllied the new SST ancillary files based on the SST from the [DA reconstruction](https://www.pnas.org/doi/10.1073/pnas.2205326119).       
+the scripts is stored on Machine Miocene:
+/home/an25872/work/ancils_generate/EOCENE/jesstierney-petmDA-e9ea2fd/PosteriorResults/regrid_interpolate.py
+
 
 ### DEBUG
 #### Gamma integral should be positive and non-zero.
@@ -99,7 +105,5 @@ source=${UM_ANCIL_DIR}/${ATMOS}/easyaerosol/cmip6_stratos/climatology_1850-2014/
 [0] ????????????????????????????????????????????????????????????????????????????????
 ```
 **Resolution**:
-Resolved after I remade and apllied the new SST ancillary files based on the SST from the [DA reconstruction](https://www.pnas.org/doi/10.1073/pnas.2205326119).       
-the scripts is stored on Machine Miocene:
-/home/an25872/work/ancils_generate/EOCENE/jesstierney-petmDA-e9ea2fd/PosteriorResults/regrid_interpolate.py
+resolved after we Switch off varying Gas MMRs. Switch it off by `l_clmchfcg` at `um > namelist > UM Science Settings > Section 01 -02 - Radiation > Gas MMRs > Varying gas MMRs`.
 
