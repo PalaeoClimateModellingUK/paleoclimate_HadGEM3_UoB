@@ -28,4 +28,8 @@ ANTS has been installed on JASMIN. Use `module load ants` to load the ANTS.
 ancil directory on JASMIN:`/gws/nopw/j04/umshared/umshared/ancil`
 
 ### ANTS on ARCHER2
+```
+export ANTS_CONTAINER=/work/y07/shared/umshared/ANTS/latest/ants_latest.sif
+singularity shell $ANTS_CONTAINER
+```
 u-by395
