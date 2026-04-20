@@ -32,4 +32,11 @@ ancil directory on JASMIN:`/gws/nopw/j04/umshared/umshared/ancil`
 export ANTS_CONTAINER=/work/y07/shared/umshared/ANTS/latest/ants_latest.sif
 singularity shell $ANTS_CONTAINER
 ```
-u-by395
+u-cc111 seems to be the official suite to generate all the suites for GC5 mdoel.    
+use `rosie co u-cc111/GC5_N96_ORCA1_ancils` to check out it.    
+
+Another Ancillary suite might be useful can be `u-by395`. According to the NCAS, [this suite is an official suite, the Regional Nesting Suite, which has been ported to archer2](https://cms-helpdesk.ncas.ac.uk/t/porting-ancillary-suite-to-archer2/1510).    
+try the brach `GAL9_Glomap_ancils`    
+`rosie co u-by395/GAL9_Glomap_ancils`   
+On jASMIN run it by:
+`rose suite-run -O ncas`    
