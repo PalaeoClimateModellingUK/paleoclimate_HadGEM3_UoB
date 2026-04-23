@@ -94,5 +94,5 @@ The mismatch bettween the given `vegfrac.nl` and the namelist `VEGFRAC` defined 
 145 use_modis_lai=.false.
 ```
 - **Resolution:**
-  turn off the `l_region_reset` to ignore the `region_reset` and `reset_type`. The version of CAP may be the root of the error.
+  ignore `l_region_reset`, `region_reset`, and `reset_type`. The version of CAP may be the root of the error.
 
