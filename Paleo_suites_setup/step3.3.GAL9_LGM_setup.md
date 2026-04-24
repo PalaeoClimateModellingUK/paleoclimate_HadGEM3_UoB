@@ -6,8 +6,12 @@ I copied the AMIP suite **u-dy316** as **u-dy662**. Then make some changes on th
 I remade and apllied the new SST ancillary files based on the SST from the [lgmDA reconstruction](https://github.com/jesstierney/lgmDA/tree/master).         
 the scripts is stored on Machine Miocene:    
 /home/an25872/work/ancils_generate/LGM/SST_and_seaice/regrid_interpolate*.py     
-**warning:** the SST and seaice of lgmDA is built from the model outputs of CESM1.2. The LGM land-sea mask used by CESM1.2 is slightly different with HadGEM3. especially over the **Scotia Sea**. Therefore, after some processes like the regridding and masking, there is a unreal ice free over **Scotia Sea**. That should be keep in mind.     
+**warning:** the SST and seaice of lgmDA is built from the model outputs of CESM1.2. The LGM land-sea mask used by CESM1.2 is slightly different with HadGEM3. That should be keep in mind.     
 In the future, we may fix it by some manual editting or try other data sources.
+
+#### 3.1.2 land-sea mask and orogrophy
+Please note that the land-sea mask and orogrophy around the antarctic is the same as piControl. That is the results of tricky disposal to prevent crash with unknown reason.    
+**In the near future, I will regenerate these ancillary with full LGM geography by ANTS ancillary workflow.4**
 
 ### 3.2 Model Physics
 #### 3.2.1 orbital parameter
@@ -62,7 +66,6 @@ s_m_rain :         -0.4527967343541150E-06          0.3383654032429559E-10      
 ********************************************************************************************
 ```
 - **Reason：**
-This situation is quiet similar to what we have encountered in the setup of piControl on MONSOON3. So I suspect the reason underlying the crash is the same as that one.     
-On MONSOON3 there are two directories to store the ancillary files: `$UMDIR/ancil/atmos/GC5` and `/common/share/monsoon_ancils/atmos/GC5/`. Some files in the former one seem to have some flaw, which can lead to crash. So, to prevent potential error, we'd better use the ancillary under the second directory.
+  I checked the 3-D theta fields, and find the high-level theta is abnormally high. Then I checked the CO2 concentration, and found it is set as the Eocene value.
 - **Resolution:**
-switch `UM_ANCIL_DIR` at `app/install_ancil` from `$UMDIR/ancil/atmos/GC5` to `/common/share/monsoon_ancils/atmos/GC5/`.
+Change `co2_mmr` correct to 1.85e-04.
