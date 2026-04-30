@@ -25,7 +25,7 @@ But this seem to be only work for UM of `vn13.9`.
 **Warning:** This is even not rightly set in GC3 suite `u-ds929`
 
 ### DEBUG
-#### abrupt crash in one single timestep.
+#### abrupt crash in single timestep.
 The NaN abruptly appears in the UKCA tracer at time timestep 880, then at the next timestep 881, the NaN spread to all the other fields like theta and U,V. Before this timepoint, the outputs seem to be quite normal.     
 `dy662.fort6.pe00` at work/24010101T0000Z/atmos_main/pe_output
 ```
@@ -69,3 +69,34 @@ s_m_rain :         -0.4527967343541150E-06          0.3383654032429559E-10      
   I checked the 3-D theta fields, and find the high-level theta is abnormally high. Then I checked the CO2 concentration, and found it is set as the Eocene value.
 - **Resolution:**
 Change `co2_mmr` correct to 1.85e-04.
+
+#### abrupt crash in single timestep that always happen after May 15 of the first model year.
+The outputs is similar with the last error. What's different is that the model always crash after May 15. The crash is very robust, whatever I change in the ancillary file it always crash around that time point.
+
+
+
+#### File name repetition when generate dumpfile
+```
+GET_FILENAME: Generated filename:/home/users/zikun.ren.ext/cylc-run/u-dy662/run5/share/data/History_Data/dy662a.da24010517_00
+GET_FILENAME:             (From): /home/users/zikun.ren.ext/cylc-run/u-dy662/run5/share/data/History_Data/dy662a.d%z%C
+
+????????????????????????????????????????????????????????????????????????????????
+???!!!???!!!???!!!???!!!???!!!       ERROR        ???!!!???!!!???!!!???!!!???!!!
+?  Error code: 1
+?  Error from routine: GET_FILENAME
+?  Error message: Filename clashes with previously generated name:
+?        /home/users/zikun.ren.ext/cylc-run/u-dy662/run5/share/data/History_Data/dy662a.da24010517_00
+?  Error from processor: 0
+?  Error number: 23
+????????????????????????????????????????????????????????????????????????????????
+```
+This error happened when I try to output dump every timestep.     
+**reason:**     
+When I dump every timestep, the dump_filename of two joint timestep will be the same, which lead to the error.
+**resolution:**    
+According to the [Naming of Output Files in the UM](https://code.metoffice.gov.uk/doc/um/latest/papers/umdp_007.pdf), we change the `dump_file_name_base` at `um > namelist > Model Input and Output > Dumping and Meaning` from `$DATAM/${RUNID}a.d%z%C` to `$DATAM/${RUNID}a.d%z%T`.
+
+
+
+
+
