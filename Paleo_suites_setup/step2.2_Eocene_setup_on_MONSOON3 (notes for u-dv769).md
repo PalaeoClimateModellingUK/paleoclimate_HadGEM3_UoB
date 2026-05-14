@@ -13,7 +13,7 @@ Some repository for reference：
 See its [Wiki](https://github.com/NOC-MSM/Regional-NEMO-Medusa/wiki/) for usage.
 [Official resource](https://forge.nemo-ocean.eu/nemo/nemo.git)
 
-- My attemption version1
+###### Attemption version 1
 (!!!!Please note that this version is **uncorrected**. Because this workflow is for NEMO5 and not the version edited by Met Office!!!!!!. leaving it here only for document, please refer to the version2, which is shown below, for a correct version)      
 1. [On Archer2] git clone https://forge.nemo-ocean.eu/nemo/nemo.git ./nemo-main
 2. cd nemo-main
@@ -68,7 +68,7 @@ srun -n 1 ./make_domain_cfg.exe
 ```
 7. You got the domain_cfg.nc and mesh_mask.
 
-- My attemption version2 with the help from *Catherine Guiavarch (catherine.guiavarch@metoffice.gov.uk)* 
+###### Attemption version 2 with the help from *Catherine Guiavarch (catherine.guiavarch@metoffice.gov.uk)* 
 1. [On Archer2] fcm co https://code.metoffice.gov.uk/svn/nemo/utils utils
 3. cd utils
 4. load the demanded modules:
