@@ -80,16 +80,16 @@ fcm:jules.xm/
 [Further keywords of Trac](https://github.com/metomi/metomi-vms/blob/master/opt/metomi-site/etc/fcm/keyword.cfg)     
 [project list](https://code.metoffice.gov.uk/trac/home/wiki/ProjectList)
 ### Some useful command
-- fcm ls fcm:um.x-br/    
+- `fcm ls fcm:um.x-br/`    
    List directory entries in the repository fcm:um.x-br
-- fcm branch-info    
+- `fcm branch-info`    
   show the detail of present working copy
-- fcm branch-list  fcm:um.x    
+- `fcm branch-list  fcm:um.x`    
   show your revision
-- fcm branch-delete     
+- `fcm branch-delete`     
   delete the working copy
-- fcm branch-create -k 702 MONSOON3_ozone_fix fcm:moci.x-tr@5515
-  make a branch from the trunk
+- `fcm branch-create -k 702 MONSOON3_ozone_fix fcm:moci.x-tr@5515`
+  make a branch from the trunk. please note that this command also works for rosie (rose) suite. you can use `fcm bc [your branch name]` over the root directory of a suite to make a branch for the trunck of a specific suite trunk (like u-dv344).
   
 
 
