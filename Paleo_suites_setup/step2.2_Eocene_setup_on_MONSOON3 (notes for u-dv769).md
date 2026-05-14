@@ -105,6 +105,31 @@ srun -n 1 ./make_domain_cfg.exe
    nn_itend    =      75   !  last  time step (std 5475)
 /
 !-----------------------------------------------------------------------
+&namdom        !   space and time domain (bathymetry, mesh, timestep)
+!-----------------------------------------------------------------------
+   cn_fcoord   =  'eORCA1_coordinates_nc4.nc_from_MR'
+   cn_topo     =  'eORCA_R1_bathy_meter_v2.0_eocene_chiselled.min30m.nc'
+   cn_bath     =  'Bathymetry'
+   jphgr_msh=0
+   ldbletanh=.true.
+   ppa0=103.9530096000000
+   ppa1=2.415951269000000
+   ppa2=100.7609285000000
+   ppacr=7.0
+   ppacr2=13.0
+   ppdzmin=999999.0
+   pphmax=999999.0
+   ppkth=15.35101370000000
+   ppkth2=48.02989372000000
+   ppsur=-3958.951371276829
+   rn_atfp=0.1
+   rn_e3zps_min=25.0
+   rn_e3zps_rat=0.2
+   rn_hmin=-8.0
+   rn_rdt=1350.0
+   nn_msh      =    1      !  create (=1) a mesh file or not (=0)
+/
+!-----------------------------------------------------------------------
 &namcfg        !   parameters of the configuration
 !-----------------------------------------------------------------------
    !
@@ -144,36 +169,14 @@ srun -n 1 ./make_domain_cfg.exe
    ln_zps      = .true.    !  z-coordinate - partial steps
 /
 !-----------------------------------------------------------------------
-&namdom        !   space and time domain (bathymetry, mesh, timestep)
-!-----------------------------------------------------------------------
-cn_fcoord   =  'eORCA1_coordinates_nc4.nc_from_MR'
-cn_topo     =  'eORCA_R1_bathy_meter_v2.0_eocene_chiselled.min30m.nc'
-cn_bath     =  'Bathymetry'
-jphgr_msh=0,
-ldbletanh=.true.,
-ppa0=103.9530096000000,
-ppa1=2.415951269000000,
-ppa2=100.7609285000000,
-ppacr=7.0,
-ppacr2=13.0,
-ppdzmin=999999.0,
-pphmax=999999.0,
-ppkth=15.35101370000000,
-ppkth2=48.02989372000000,
-ppsur=-3958.951371276829,
-rn_atfp=0.1,
-rn_e3zps_min=25.0,
-rn_e3zps_rat=0.2,
-rn_hmin=-8.0,
-rn_rdt=1350.0,
-/
-!-----------------------------------------------------------------------
 &namlbc        !   lateral momentum boundary condition
 !-----------------------------------------------------------------------
 /
 !-----------------------------------------------------------------------
 &nammpp        !   Massively Parallel Processing                        ("key_mpp_mpi)
 !-----------------------------------------------------------------------
+/
+
 ```
 6. `cd DOMAINcfg`; mkdir logs ; `sbatch` the `sub` script shown as below:
 ```
