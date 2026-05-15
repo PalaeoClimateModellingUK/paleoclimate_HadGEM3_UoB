@@ -70,8 +70,15 @@ s_m_rain :         -0.4527967343541150E-06          0.3383654032429559E-10      
 - **Resolution:**
 Change `co2_mmr` correct to 1.85e-04.
 
-#### abrupt crash in single timestep that always happen after May 15 of the first model year.
-The outputs is similar with the last error. What's different is that the model always crash after May 15. The crash is very robust, whatever I change in the ancillary file it always crash around that time point.
+#### Abrupt crash in single timestep that always happen after a few monthes' successful running.
+The outputs is similar with the last error.
+What I found is that during the running, the top-level air temperature was significantly going up and reach about 30000 K. This is really abnormal for LGM, which is a cold paleo interval.
+
+- **Reason:**
+  some thing goes run with the fixed ozone ancillary.
+
+- **resolution:**
+  replace the zonal mean ozone with the modern ozone distribution. In the near future we will activate the ozone scheme for all of our GAL9.0 suites.
 
 
 
