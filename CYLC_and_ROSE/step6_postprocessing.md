@@ -89,6 +89,7 @@ and
 ## NEMO and CICE ##
 - NEMO outputs:
   - Some set in nemo_cice don't work (for example ***nn_write***). That may be caused by the IO server
+  - If you want to minimize the files to be archived, switch off `process_all_fieldsfiles`, `create_means`, and`archive_means` at `postproc > NEMO > Meaning`, and remove all the means_fieldsfiles. If you want to output and archive specific variables of specific time scale, edit `iodef.xml` at `app/nemo_cice/file`.
 
 ## Debugging instance ##
 ### number of fields exceeds reserved headers ###
