@@ -21,8 +21,11 @@ Kenji set the orbital parameter by modifying the source codes, and I find a swit
 But this seem to be only work for UM of `vn13.9`. 
 
 #### 3.2.2 green house gases
-`co2_mmr` is set to 1.85e-04     
-**Warning:** This is even not rightly set in GC3 suite `u-ds929`
+`co2_mmr` should be set to 2.79046e-04kg/kg
+
+#### 3.2.3 anthropogenic emission
+Some anthropogenic emission might should be set to zero.       
+!!!!!!!!!!!!!!!!!!!!!!!!!haven't change yet. modify it in the near future
 
 ### DEBUG
 #### abrupt crash in single timestep.
