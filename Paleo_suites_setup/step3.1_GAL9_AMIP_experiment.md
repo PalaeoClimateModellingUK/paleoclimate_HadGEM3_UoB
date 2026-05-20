@@ -92,7 +92,7 @@ In `selevt.out` at the work directory of retrieve_ozone:
 MOOSE is not able to run on host nidd1128
 ```
 #### reason:
-The moose command is allowed to be used on the `collashared` queue on MONSOON3.
+The moose command is not allowed to be used on the `collashared` queue on MONSOON3.
 #### resolution:
 Edit the `meto_ex_ozone.cylc` in the `site` directory and ozone-redistribution.cylc.     
 Refer to the [revision 355927](https://code.metoffice.gov.uk/trac/roses-u/changeset/355927) on Trac system.
