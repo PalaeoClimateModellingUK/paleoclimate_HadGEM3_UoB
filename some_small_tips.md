@@ -19,7 +19,7 @@ use `sacctmgr show qos` to show all the QOSs can be used on the machine
 use xconv to check the outputs of UM
 
 
-
+use find -L . -name "***" to search files.
 
 
 
