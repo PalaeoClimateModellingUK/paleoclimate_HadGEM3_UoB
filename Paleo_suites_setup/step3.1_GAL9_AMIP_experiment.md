@@ -33,3 +33,66 @@ There is some necessary modification on the configuration to make it runnable on
 ```
 The python script `mule_cumf.py` is required by the tasks: TEST_NOOMP, TEST_NOSTASH, TEST_OMP, TEST_PE, and mule_cumf.py require module `pkg_resources` which is not installed in the default python environment for CYLC8
 on the MONSOON3. Therefore, turn off all of them. set `TASK_TESTS` to false at `rose-suite.conf`.
+
+
+## DEBUGGING:
+### retrieve_ozone: MOOSE is not able to run on host nidd1128
+#### error information
+This bug occurred when I was trying to activate the interactive ozone scheme in the AMIP suite u-dy179. The situation is as below:
+In `job.err` of the `retrieve_ozone`:
+```
+Traceback (most recent call last):
+  File "/home/users/zikun.ren.ext/cylc-run/u-dy179/run9/bin/retrieve_ozone_data.py", line 485, in <module>
+    main()
+  File "/home/users/zikun.ren.ext/cylc-run/u-dy179/run9/bin/retrieve_ozone_data.py", line 466, in main
+    year_data = get_archived_data(year_data, archive, i + 1)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/users/zikun.ren.ext/cylc-run/u-dy179/run9/bin/retrieve_ozone_data.py", line 352, in get_archived_data
+    raise OzoneArchiveRetrievalError(
+OzoneArchiveRetrievalError:
+[ERROR] Failed in archive retrieval script: /home/users/zikun.ren.ext/cylc-run/u-dy179/run9/bin/retrieve_massr.sh
+[FAIL] ants-launch $CYLC_WORKFLOW_RUN_DIR/bin/retrieve_ozone_data.py # return-code=1
+2026-05-20T15:13:34Z CRITICAL - failed/ERR
+```
+In `job.out` of the `retrieve_ozone`:
+```
+[INFO] Prepending the following to PYTHONPATH: /home/users/zikun.ren.ext/cylc-run/u-dy179/run9/share/fcm_make_ants/build/lib
+[INFO] ANTS version loaded was:
+ants: /home/users/zikun.ren.ext/cylc-run/u-dy179/run9/share/fcm_make_ants/build/lib/ants/__init__.py (version 2.0.0)
+[INFO] Iris version loaded was:
+iris: /lustre/ehz2col/collaboration/common/share/scitools/environments/default-2025_11_26/lib/python3.12/site-packages/iris/__init__.py (version 3.14.0)
+[OK] Modules loaded.
+Using Python version 3.12.12 | packaged by conda-forge | (main, Oct 22 2025, 23:25:55) [GCC 14.3.0]
+Using Iris version 3.14.0
+[INFO] *************************************************************************
+[INFO]
+[INFO] Troposphere data to be retrieved from files matching "dy179a.po[1988|1989]*.pp"
+[INFO]
+[INFO] Ozone redistribution shared task directory:
+                /home/users/zikun.ren.ext/cylc-run/u-dy179/run9/share/data/ozone_redistribution
+[INFO]
+[INFO] Initial cycle point: 19900101T0000Z
+[INFO] Current cycle point: 19900101T0000Z
+[INFO]
+[INFO] Availability on disk expected from model run:
+                1988=No, 1989=No
+[INFO] Primary archive source:
+                moose:crum/u-dy179/apo.pp
+[INFO] Secondary archive source:
+
+[INFO]
+[INFO] *************************************************************************
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+[INFO] Checking moose:crum/u-dy179/apo.pp archive for 1989, months between 1 and 12.
+[SUBPROCESS] [MOOSE] moo select -C query moose:crum/u-dy179/apo.pp dy179a.po1989_arch1.pp
+[MOOSE ERR]
+```
+In `selevt.out` at the work directory of retrieve_ozone:
+```
+MOOSE is not able to run on host nidd1128
+```
+#### reason:
+The moose command is allowed to be used on the `collashared` queue on MONSOON3.
+#### resolution:
+Edit the `meto_ex_ozone.cylc` in the `site` directory and ozone-redistribution.cylc.     
+Refer to the [revision 355927](https://code.metoffice.gov.uk/trac/roses-u/changeset/355927) on Trac system.
