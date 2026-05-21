@@ -76,7 +76,7 @@ srun -n 1 ./make_domain_cfg.exe
               module use /work/y07/shared/umshared/moci/modules/modules
               module load GC5-PrgEnv
 ```
-4. update the archived environment set for ARCHER2: `cp arch/NOC/arch-X86_ARCHER2-Cray.fcm arch/NOC/arch-X86_ARCHER2-Cray-updated.fcm` and make changes as below:
+4. update the archived environment set for ARCHER2: `cp build/arch/NOC/arch-X86_ARCHER2-Cray.fcm build/arch/NOC/arch-X86_ARCHER2-Cray-updated.fcm` and make changes as below:
 ```
 --- arch-X86_ARCHER2-Cray.fcm   2026-02-03 11:49:57.000000000 +0000
 +++ arch-X86_ARCHER2-Cray-updated.fcm   2026-05-12 13:39:30.000000000 +0100
