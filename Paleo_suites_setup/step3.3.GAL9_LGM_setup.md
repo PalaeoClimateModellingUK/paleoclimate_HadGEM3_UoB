@@ -4,9 +4,9 @@ I copied the AMIP suite **u-dy316** as **u-dy662**. Then make some changes on th
 ### 3.1 ancillary files:
 #### 3.1.1 SST and seaice 
 I remade and apllied the new SST ancillary files based on the SST from the [lgmDA reconstruction](https://github.com/jesstierney/lgmDA/tree/master).         
-the scripts is stored on Machine Miocene:    
+the scripts is stored on the Machine Miocene:    
 /home/an25872/work/ancils_generate/LGM/SST_and_seaice/regrid_interpolate*.py     
-**warning:** the SST and seaice of lgmDA is built from the model outputs of CESM1.2. The LGM land-sea mask used by CESM1.2 is slightly different with HadGEM3. That should be keep in mind.     
+**warning:** the SST and seaice of lgmDA is built from the model outputs of CESM1.2. The LGM land-sea mask used by CESM1.2 is slightly different with HadGEM3. That should be kept in mind.     
 In the future, we may fix it by some manual editting or try other data sources.
 
 #### 3.1.2 land-sea mask and orogrophy
