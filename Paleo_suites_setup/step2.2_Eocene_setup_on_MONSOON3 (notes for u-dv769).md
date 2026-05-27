@@ -231,7 +231,7 @@ So, change the `description` slot of `sn_rcv_rnf` from `coupled1d` to `coupled` 
 Please also note that `ln_rnf` is only used when `ln_cpl` is **False**. `ln_rnf` controls whether the fixed runoff forcing file runoff_1m_nomask.nc is used. The other switch should be turned off is the 'ln_rnf_icb'. It should be set as '.false.'. Or the variable `sofwicb` （ice melt rate of icebergs） will be read from runoff_1m_nomask.nc and force the model.
 ``
 
-- **STEP2 coupler side**:     
+- STEP2 coupler side:     
 As documented at **16.2** in the [umdp_C02 of vn13.8](https://code.metoffice.gov.uk/doc/um/vn13.8/papers/umdp_C02.pdf), the method for passing runoff information from UM to NEMO through OASIS3-MCT differs between the 1D and 2D approaches.
 For 1D method, the {your rose suite}/app/coupled/file/namcouple should include the codes below:
 ```
@@ -263,7 +263,7 @@ For 2D method, the {your rose suite}/app/coupled/file/namcouple should include t
 679 ############################################################################
 ```
 Please change it in your Eocene suite.    
-- **STEP3 UM side**:    
+- STEP3 UM side:    
 According to the section **16.2** in the [umdp_C02 of vn13.8](https://code.metoffice.gov.uk/doc/um/vn13.8/papers/umdp_C02.pdf), in the the STASH, the  `RIVER OUTFLOW (ATMOS GRID)` should be added at `um > namelist > Model Output Streams > STASH Requests and Profiles > STASH Requests`
 ```
 [namelist:umstash_streq(26004)]
@@ -280,6 +280,20 @@ In the GC3 model, this keeps the same with piControl. However, the horizontal va
 **resolution**:      
 swich the **`ln_boost`** to **`spatially uniform drag coefficient`** at `nemo > namelist > Top and bottom boundaries > bottom friction (nambfr)`.
 
+##### 2.1.1.e Tidal (K1 and M2rowdrg)
+`K1 and M2rowdrg` are actually the ancillary for the tidal analysis. In both the GC3 and GC5 suites, `ln_tide=.false`. Therefore, I guess they are never actually used in the model running. In the Seb's suite, they are just kept the same as in the piControl.
+
+##### 2.1.1.f Lateral boundary condition on momentum Tidal (shlat2d.nc)
+Shlat2d seems to be related to the slip over the lateral boundary. For the modern, most ocean areas are set as free-slip. Only a few points like Gibraltar strait are set as 2 or 3.      
+
+In Seb's Eocene suite, this field is simply set as consistent constant 0. To do it in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`.    
+
+!!!!!!!!!!! This might be quite important for LGM and Pliocene
+
+##### 2.1.1.g bottom geothermal heat flux (geothermal_heating.nc)
+Bcause we don't have any suitable geothermal_heating for Eocene, switch off `ln_trabbc` at `nemo > namelist > Top and bottom boundaries > Bottom boundary condition (nambbc)`.
+
+!!!!!Gabriel is tring to write a script to generate it from the bathymeytry.
 
 #### 2.1.2  UM
 ##### 2.1.2.a Chlorophyll qrclim.sea (potential element)
