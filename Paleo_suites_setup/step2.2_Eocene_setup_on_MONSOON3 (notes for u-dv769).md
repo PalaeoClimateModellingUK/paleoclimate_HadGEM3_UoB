@@ -227,7 +227,7 @@ To remove the dependence of the NEMO on the `river_number_nemo.nc`. We checked t
  571       ENDIF
 ```
 So, change the `description` slot of `sn_rcv_rnf` from `coupled1d` to `coupled` at `nemo > namelist > surface boundary condition > Coupled Forcing (namsbc_cpl)`    
-Please also note that `ln_rnf` is only used when `ln_cpl` is **False**. `ln_rnf` controls whether the fixed runoff forcing file runoff_1m_nomask.nc is used. The other switch should be turned off is the 'ln_rnf_icb'. It should be set as '.false.'. Or the variable `sofwicb` （ice melt rate of icebergs） will be read from runoff_1m_nomask.nc and force the model.
+Please also note that `ln_rnf` is only used when `ln_cpl` is **False**. `ln_rnf` controls whether the fixed runoff forcing file `runoff_1m_nomask.nc` is used. The other switch should be turned off is the 'ln_rnf_icb'. It should be set as '.false.'. Or the variable `sofwicb` （ice melt rate of icebergs） will be read from runoff_1m_nomask.nc and force the model.
 ``
 
 - STEP2 coupler side:     
