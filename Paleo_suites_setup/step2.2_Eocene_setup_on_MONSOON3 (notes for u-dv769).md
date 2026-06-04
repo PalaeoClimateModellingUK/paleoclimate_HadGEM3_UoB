@@ -274,29 +274,34 @@ tim_name='TCOUP'
 use_name='UPCOUP'
 ```
 
-##### 2.1.1.d  background bottom turbulent kinetic energy (bfr_coef.nc)
+##### 2.1.1.d Tidal mixing at ridges (K1 and M2rowdrg)
+In both the GC3 and GC5 suites, `ln_tide=.false` that means the complicated tide scheme is not used in the model.
+
+However, there is another switch related to the tide mixing. it is `ln_zdftmx=.true.` and is still working for the piControl. `zdftmx` is the old parametrisation of mixing due to internal tides generated at ridges. It will make use of the fixed K1 and M2rowdrg.      
+
+(Above information is from Dave Storkey)
+
+##### 2.1.1.e  background bottom turbulent kinetic energy (bfr_coef.nc)
 In the GC3 model, this keeps the same with piControl. However, the horizontal variation of bottom friction coefficient `nemo_cice > namelist > NEMO namelist> bottom boundary > bottom friction (nambfr) > lnbfr2d` is set as false. This possibly means the `bfr_coef.nc` is actually not used.    
 **resolution**:      
 swich the **`ln_boost`** to **`spatially uniform drag coefficient`** at `nemo > namelist > Top and bottom boundaries > bottom friction (nambfr)`.
-
-##### 2.1.1.e Tidal (K1 and M2rowdrg)
-`K1 and M2rowdrg` are actually the ancillary for the tidal analysis. In both the GC3 and GC5 suites, `ln_tide=.false`. Therefore, I guess they are never actually used in the model running. In the Seb's suite, they are just kept the same as in the piControl.
 
 ##### 2.1.1.f Lateral boundary condition on momentum Tidal (shlat2d.nc)
 Shlat2d seems to be related to the slip over the lateral boundary. For the modern, most ocean areas are set as free-slip. Only a few points like Gibraltar strait are set as 2 or 3.      
 
 In Seb's Eocene suite, this field is simply set as consistent constant 0. To do it in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`.    
 
-!!!!!!!!!!! This might be quite important for LGM and Pliocene
+**shlat2d.nc and brf_coef.nc**: These are ad hoc tunings in a few narrow straits to try to get the throughflow/exchange fluxes to match present day observations. Since you don’t know what these fluxes were in paleo times (maybe you have some idea?) I think it is going to be difficult to do anything sensible with this, and I’d be inclined to just turn these off (apart from the present-day configuration). You can turn these off by setting ln_shlat2d=.false. and ln_boost=.false. (from Dave Storkey)
+
 
 
 ##### 2.1.1.g bottom geothermal heat flux (geothermal_heating.nc)
 Bcause we don't have any suitable geothermal_heating for Eocene, switch off `ln_trabbc` at `nemo > namelist > Top and bottom boundaries > Bottom boundary condition (nambbc)`.
 
-!!!!!Gabriel is tring to write a script to generate it from the bathymeytry.
 
 ##### 2.1.1.h subassin (subbasins.nc)
-The `subbasins.nc` is not necessary for the model running. It will not be reqired if the switch ln_subbas which is located at `nemo > namelist > Diagnostics > Poleward Transports & Zonal means` is set as off. I thought it was only used in the calculation of zonal mean heat and salt transport.
+The `subbasins.nc` is not necessary for the model running. It will not be reqired if the switch ln_subbas which is located at `nemo > namelist > Diagnostics > Poleward Transports & Zonal means` is set as off. I thought it was only used in the calculation of zonal mean heat and salt transport.     
+
 #### 2.1.2  UM
 ##### 2.1.2.a Chlorophyll qrclim.sea (potential element)
 This is the same in both the piControl and eocene for the GC3 suites. In GC5, it is updated. Not sure whether it will significantly impact the results.
