@@ -202,9 +202,11 @@ After files made, renamed with
 rename DSTAREA DESTAREA *     
 rename CONSERVE CONSERV *    
 rename BILINEAR BILINEA *    
-because the model expects different names from what the suite produces.     
+because the model expects different names from what the suite produces.      
 
-
+Caveat:
+Please note that this work flow doesn't generate `atmo_mask_fracarea_anc_ns` in ancillary form, but only output `atmo_mask_fracarea_anc_ns.nc`.
+If you demand `atmo_mask_fracarea_anc_ns` in ancillary form , please use `xancil` to convert it.
 
 
 
