@@ -195,15 +195,15 @@ cylc tui
 ```
 set the task `suite_info` as successful, by the action `set`.
 
-## 5. check the output
-Output files are written to ~/cylc-run/u-bp550/share/data/20130105T0000Z
+## 5. check the output 
+Output files are written to ~/cylc-run/u-dy998/share/data/20130105T0000Z     
+  
+After files made, renamed with    
+rename DSTAREA DESTAREA *     
+rename CONSERVE CONSERV *    
+rename BILINEAR BILINEA *    
+because the model expects different names from what the suite produces.     
 
-After files made, renamed with
-rename DSTAREA DESTAREA *
-rename CONSERVE CONSERV *
-rename BILINEAR BILINEA *
-because the model expects different names from what the suite produces.
-Perhaps ask Mirek if this can be done in the suite?
 
 
 
