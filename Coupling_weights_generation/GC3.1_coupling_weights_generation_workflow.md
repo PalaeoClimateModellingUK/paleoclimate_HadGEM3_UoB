@@ -1,9 +1,10 @@
 # prerequisites
-Before starting the procedures below, you need to have one ORCA1 bathymetry. Please refer to [Gabriel Pontes's notes](https://github.com/pontesgm4/HadGEM3-GC5_palaeo/blob/main/step1_make_ocean/step1_make_domain_cfg.md) for the procedures to generate the bathymetry.
+Before starting the procedures below, you need to have one ORCA1 bathymetry. Please refer to [Gabriel Pontes's notes](https://github.com/pontesgm4/HadGEM3-GC5_palaeo/blob/main/step1_make_ocean/step1_make_domain_cfg.md) for the procedures to generate the bathymetry.     
 
 
 # First step: generate mesh_mask.nc from bathymetry using the DOMAINcfg of NEMO4.0
-Caveat: The workflow described here is based on NEMO4, whereas GC3.1 uses NEMO3.6 as its ocean component. Although the generated mesh_mask.nc is compatible with the subsequent step, the difference in model versions should be noted. Minor differences in results may exist.
+Caveat: The workflow described here is based on NEMO4, whereas GC3.1 uses NEMO3.6 as its ocean component. Although the generated mesh_mask.nc is compatible with the subsequent step, the difference in model versions should be noted. Minor differences in results may exist.     
+To avoid the version mismatch please 
 ## 1. Check out the NEMO utils
 Please run the following commands on archer2
 ```
@@ -12,7 +13,7 @@ cd <your working directory>
 fcm co https://code.metoffice.gov.uk/svn/nemo/utils utils
 cd util
 ```
-## 2. update the archived environment set for ARCHER2
+## 2. Update the archived environment set for ARCHER2
 `cp build/arch/NOC/arch-X86_ARCHER2-Cray.fcm build/arch/NOC/arch-X86_ARCHER2-Cray-updated.fcm`
 make changes as below:
 ```
@@ -28,12 +29,21 @@ make changes as below:
 
  %NCDF_INC            -I%NCDF_HOME/include -I%HDF5_HOME/include
 ```
-## 3. load the demanded modules and compile the DOMAINcfg
+## 3. Load the demanded modules and compile the DOMAINcfg
+Load modules:
 ```
-              module use /work/y07/shared/umshared/moci/modules/modules
-              module load GC5-PrgEnv
-              cd tools
-              ./maketools -m X86_ARCHER2-Cray-updated -n DOMAINcfg
+module use /work/y07/shared/umshared/moci/modules/modules
+module load GC5-PrgEnv
+```
+Move arch and mk into main directory:
+```bash
+mv build/arch .
+mv build/mk .
+```
+compile DOMAINcfg
+```
+cd tools
+ ./maketools -m X86_ARCHER2-Cray-updated -n DOMAINcfg
 ```
 ## 4. Edit `namelist_cfg`
 `vim namelist_cfg` and use the setting as below, with <your ORCA1 bathymetry file> changed to your bathmetry file:
@@ -146,31 +156,7 @@ Paste:
 srun -n 1 ./make_domain_cfg.exe
 ```
 change <your directory> to your target directory.
-## 6. `cd DOMAINcfg`; mkdir logs ; `sbatch` the `sub` script shown as below:
-```
-#!/bin/bash -l
-#
-#SBATCH --job-name=DOMAINcfg_test
-#SBATCH --output=logs/DOMAINcfg_%j.out
-#SBATCH --error=logs/DOMAINcfg_%j.err
-#SBATCH --time=60:00
-#SBATCH --chdir=/work/n02/n02/an25872/NEMO_SRC/nemo-main/tools/DOMAINcfg
-#SBATCH --partition=serial
-#SBATCH --qos=serial
-#SBATCH --account=n02-P2F
-#SBATCH --exclusive=mcs
-#SBATCH --ntasks=1
-#SBATCH --mem=100G
-#SBATCH --export=NONE
-
-srun -n 1 ./make_domain_cfg.exe
-```
-create log directory:     
-`mkdir -p logs`
-```bash
-sbatch submit_domaincfg.sh
-```
-## 7. Verify output
+## 6. Verify output
 Successful completion should generate:
 
 - `domain_cfg.nc`
@@ -190,5 +176,5 @@ Check that:
 - key gateways are open/closed as intended
 - no obvious artefacts remain
 
-
+# Second step: generate coupling weights from the mesh_mask.nc
 
