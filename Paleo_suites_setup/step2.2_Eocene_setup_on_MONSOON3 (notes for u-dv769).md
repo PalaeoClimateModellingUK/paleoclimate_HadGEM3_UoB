@@ -282,14 +282,65 @@ However, there is another switch related to the tide mixing. it is `ln_zdftmx=.t
 (Above information is from Dave Storkey)
 
 ##### 2.1.1.e  background bottom turbulent kinetic energy (bfr_coef.nc)
-In the GC3 model, this keeps the same with piControl. However, the horizontal variation of bottom friction coefficient `nemo_cice > namelist > NEMO namelist> bottom boundary > bottom friction (nambfr) > lnbfr2d` is set as false. This possibly means the `bfr_coef.nc` is actually not used.    
+In the GC3 model, this keeps the same with piControl. However, the horizontal variation of bottom friction coefficient `nemo_cice > namelist > NEMO namelist> bottom boundary > bottom friction (nambfr) > ln_bfr2d` is set as false. This possibly means the `bfr_coef.nc` is not actually  used.    
 **resolution**:      
 swich the **`ln_boost`** to **`spatially uniform drag coefficient`** at `nemo > namelist > Top and bottom boundaries > bottom friction (nambfr)`.
 
 ##### 2.1.1.f Lateral boundary condition on momentum Tidal (shlat2d.nc)
-Shlat2d seems to be related to the slip over the lateral boundary. For the modern, most ocean areas are set as free-slip. Only a few points like Gibraltar strait are set as 2 or 3.      
+shlat2d.nc seems to be related to the slip over the lateral boundary. For the modern, most ocean areas are set as free-slip. Only a few points like Gibraltar strait are set as 2 or 3.      
 
-In Seb's Eocene suite, this field is simply set as consistent constant 0. To do it in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`.    
+In GC3.1 suite, this ancillary doesn't exist and is controled by some tricky setup in the source codes to generate the fmask.
+The section is located at `./NEMOGCM/NEMO/OPA_SRC/DOM/dommsk.F90` and has the following contents:
+```
+403       IF( cp_cfg == "orca" .AND. jp_cfg == 1 ) THEN   ! ORCA R1 configuration
+404          !                                                 ! Increased lateral friction near of some straits
+405          ! This dirty section will be suppressed by simplification process:
+406          ! all this will come back in input files
+407          ! Currently these hard-wired indices relate to configuration with
+408          ! extend grid (jpjglo=332)
+409          !
+410          isrow = 332 - jpjglo
+411          !
+412          IF(lwp) WRITE(numout,*)
+413          IF(lwp) WRITE(numout,*) '   orca_r1: increase friction near the following straits : '
+414          IF(lwp) WRITE(numout,*) '      Gibraltar '
+415          ii0 = 282           ;   ii1 = 283        ! Gibraltar Strait
+416          ij0 = 241 - isrow   ;   ij1 = 241 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 2._wp
+417
+418          IF(lwp) WRITE(numout,*) '      Bhosporus '
+419          ii0 = 314           ;   ii1 = 315        ! Bhosporus Strait
+420          ij0 = 248 - isrow   ;   ij1 = 248 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 2._wp
+421
+422          IF(lwp) WRITE(numout,*) '      Makassar (Top) '
+423          ii0 =  48           ;   ii1 =  48        ! Makassar Strait (Top)
+424          ij0 = 189 - isrow   ;   ij1 = 190 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 3._wp
+425
+426          IF(lwp) WRITE(numout,*) '      Lombok '
+427          ii0 =  44           ;   ii1 =  44        ! Lombok Strait
+428          ij0 = 164 - isrow   ;   ij1 = 165 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 2._wp
+429
+430          IF(lwp) WRITE(numout,*) '      Ombai '
+431          ii0 =  53           ;   ii1 =  53        ! Ombai Strait
+432          ij0 = 164 - isrow   ;   ij1 = 165 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 2._wp
+433
+434          IF(lwp) WRITE(numout,*) '      Timor Passage '
+435          ii0 =  56           ;   ii1 =  56        ! Timor Passage
+436          ij0 = 164 - isrow   ;   ij1 = 165 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 2._wp
+437
+438          IF(lwp) WRITE(numout,*) '      West Halmahera '
+439          ii0 =  58           ;   ii1 =  58        ! West Halmahera Strait
+440          ij0 = 181 - isrow   ;   ij1 = 182 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 3._wp
+441
+442          IF(lwp) WRITE(numout,*) '      East Halmahera '
+443          ii0 =  55           ;   ii1 =  55        ! East Halmahera Strait
+444          ij0 = 181 - isrow   ;   ij1 = 182 - isrow   ;   fmask( mi0(ii0):mi1(ii1),mj0(ij0):mj1(ij1),1:jpk ) = 3._wp
+445          !
+446       ENDIF
+```
+
+To do it in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`. ln    
+
+I also checked the NEMO source codes.
 
 **shlat2d.nc and brf_coef.nc**: These are ad hoc tunings in a few narrow straits to try to get the throughflow/exchange fluxes to match present day observations. Since you don’t know what these fluxes were in paleo times (maybe you have some idea?) I think it is going to be difficult to do anything sensible with this, and I’d be inclined to just turn these off (apart from the present-day configuration). You can turn these off by setting ln_shlat2d=.false. and ln_boost=.false. (from Dave Storkey)
 
