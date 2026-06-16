@@ -2,8 +2,6 @@
 ## 1.1 UM
 refer to `$UMDIR/ancil/data/ancil_versions/filenames/v9/ancils` for the default name of UM ancillary files
 refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` for the directory of UM ancillary.
-
-### 1.1.1 surface
 - **Land sea mask**    
   export UM_ANCIL_MASK_FILE=qrparm.mask    
   export UM_ANCIL_MASK_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/land_sea_mask/etop01/PILGM4    
@@ -16,26 +14,65 @@ refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` for t
   export UM_ANCIL_GENLAND_FILE=qrclim.land   
   export UM_ANCIL_GENLAND_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/general_land/GlobAlbedo/PILGM4
 
+- **Orography**    
+  export UM_ANCIL_OROG_FILE=qrparm.orog
+  export UM_ANCIL_OROG_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/orography/globe30/PILGM4
+
 - **Sea-surface albedo (chlorophyll in seawater)**     
-  export UM_ANCIL_GENSEA_FILE=qrclim.sea   
-  export UM_ANCIL_GENSEA_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/general_sea/GlobColour/PILGM4
+  export UM_ANCIL_GENSEA_FILE=qrclim.sea    
+  export UM_ANCIL_GENSEA_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/general_sea/GlobColour/PILGM4    
 
 - **Large Scale Hydroglogy TOP-index (mean/sd/combined)**     
-  export UM_ANCIL_LSH_TIND_FILE=qrparm.hydtop   
-  export UM_ANCIL_LSH_TOPIND_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/hydrol_lsh/hydrosheds/PILGM4
+  export UM_ANCIL_LSH_TIND_FILE=qrparm.hydtop    
+  export UM_ANCIL_LSH_TOPIND_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/hydrol_lsh/hydrosheds/PILGM4     
 
-- **Large Scale Hydroglogy TOP-index (mean/sd/combined)**     
-  export UM_ANCIL_LSH_TIND_FILE=qrparm.hydtop   
-  export UM_ANCIL_LSH_TOPIND_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/hydrol_lsh/hydrosheds/PILGM4
+- **Large Scale Hydroglogy TOP-index (mean/sd/combined)**      
+  export UM_ANCIL_LSH_TIND_FILE=qrparm.hydtop     
+  export UM_ANCIL_LSH_TOPIND_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/hydrol_lsh/hydrosheds/PILGM4    
+  
+- **Soil temperature climatology**     
+  export UM_ANCIL_SLT_FILE=qrclim.slt     
+  export UM_ANCIL_SLT_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/soil_temp/amip/PILGM4     
+  (initial state)     
+  
+- **Soil moisture and snow amount climatology**       
+  export UM_ANCIL_SMOW_FILE=qrclim.smow     
+  export UM_ANCIL_SMOW_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/smc_snow/gswp2_hwsd_vg/PILGM4    
+  (initial state)    
+  
+- **Soil dust**    
+  export UM_ANCIL_SOILDUST_FILE=qrparm.soil.dust    
+  export UM_ANCIL_SOILDUST_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/soil_dust/PILGM4    
 
-### 1.1.2 surface
+- **soil parameters**    
+  export UM_ANCIL_SOIL_FILE=qrparm.soil    
+  export UM_ANCIL_SOIL_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/soil_parameters/hwsd_vg/PILGM4    
 
-### 1.1.3 UKCA-GLOMAP mode ancillaries (ancillary/netcdf format)
+- **All surface single level emissions for sulphur cycle**
+  export UM_ANCIL_SULPSURF_FILE=qrclim.sulpsurf
+  export UM_ANCIL_SULPDMS_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/classic_aerosol/LGM
+  (for classic aerosol)
+  
+- **TRIP River routing sequence**    
+  export UM_ANCIL_TRIP_SEQ_FILE=qrparm.rivseq    
+  export UM_ANCIL_SULPDMS_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/classic_aerosol/LGM    
+
+- **TRIP River routing storage ancillary**     
+  export UM_ANCIL_TRIP_STOR_FILE=qrclim.rivstor    
+  export UM_ANCIL_TRIP_STOR_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/rivers_trip/storage/fekete/PILGM4    
+    
+- **Vegetation fractions**
+  export UM_ANCIL_VEGFRAC_FILE=qrparm.veg.frac    
+  export UM_ANCIL_TRIP_STOR_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/rivers_trip/storage/fekete/PILGM4     
+
+- **Vegetation functional types**
+  export UM_ANCIL_VEGFUNC_FILE=qrparm.veg.func    
+  export UM_ANCIL_VEGFUNC_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/vegetation/func_type_modis/PILGM4
+
+**UKCA-GLOMAP mode ancillaries (ancillary/netcdf format)**     
 - **initial conditions for other UKCA fields**     
   export UM_ANCIL_MODEINIT_FILE=qrclim.modeinit_L85      
   export UM_ANCIL_MODEINIT_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/mode_init/LGM     
-  (Not activated in Kenji's suite; it is usually read from restart dumps)
+  (initial state; Not activated in Kenji's suite)
 
-  
 
-# UKCA-GLOMAP mode ancillaries (ancillary/netcdf format)
