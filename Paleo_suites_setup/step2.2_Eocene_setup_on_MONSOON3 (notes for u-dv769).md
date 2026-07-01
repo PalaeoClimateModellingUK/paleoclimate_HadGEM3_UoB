@@ -443,7 +443,7 @@ please check the dump and meaning and the **time profiles of the STASH**.
 the old version restart file didn't ouptput `neos`. In additon, the default Equation of State is different between GC3 (nn_eos='polynomial EOS-80') and GC5(nn_eos='polynomial TEOS-10').
 **resolution**:    
 - Switch to `eos80` at `nemo > namelist > Tracer options (namtra) > Equation of State (nameos)`
-- delete the code block about the Eos check     
+- fcm co fcm:nemo.xm/NEMO/branches/UKMO/NEMO_4.0.4_GOSI9_package_16448_N216_GC5c@17023 and delete the code block about the Eos check     
 ```
 301       IF ( ln_rst_eos ) THEN
 302          ! Check equation of state used is consistent with the restart
@@ -455,7 +455,7 @@ the old version restart file didn't ouptput `neos`. In additon, the default Equa
 308          ENDIF
 309       ENDIF
 ```
-in the src of NEMO `src/nemo/src/OCE/IOM/restart.F90`.     
+in the src of NEMO `/src/OCE/IOM/restart.F90`.     
 To modify it, `fcm co` the NEMO src to the local and modify ithe local resource, then apply it to `nemo_sources` at `fcm_make_ocean > env > NEMO and SI3 Sources`.   
 In the near future, I will make a FCM branch for this modification.    
 - exclude `toce_con`, `soce_abs`... etc. from the `app/nemo/file/file_def_nemo-oce.xml`
