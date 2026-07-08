@@ -701,11 +701,22 @@ It seems to stem from that the Fortran code was changed from 'if' statements to 
 **resolution:**
 switch off the ice shelves module by `ln_isf` at `nemo > namelist > Surface Boudary Condition (namsbc)`
 
-#### No such file or directory: 'set_by_install_ancil' in retrieve_ozone tadk
+#### No such file or directory: 'set_by_install_ancil' in retrieve_ozone task (ARCHER2)
 ```
   1 [FAIL] file:/work/n02/n02/an25872/cylc-run/u-ea539_ants_test/run2/share/data/ozone_redistribution/mmro3_monthly_CMIP7_3200_ea539    -ancil_2anc=source=set_by_install_ancil: [Errno 2] No such file or directory: 'set_by_install_ancil'
   2 2026-07-03T03:41:39Z CRITICAL - failed/ERR
 ```
-
+**reason:**    
+The command `cylc broadcast` in the post-script of task `install_ancil` set up in the `ozone-redistribution.rc` doesn't work on ARCHER2
 **resolution:**    
-reload after install_ancil lead to this error, retrigger install_ancil before retrigger the retrieve_ozone.
+Change the 
+```
+ 38             UM_INITIAL_OZONE_ANCIL = 'set_by_install_ancil'
+ 39             UM_OROG_ANCIL = 'set_by_install_ancil'
+```
+under the [[OZONE]][[[environment]]]
+as
+```
+ 38             UM_INITIAL_OZONE_ANCIL = $CYLC_WORKFLOW_SHARE_DIR/data/etc/ancil/qrclim.ozone
+ 39             UM_OROG_ANCIL = $CYLC_WORKFLOW_SHARE_DIR/data/etc/ancil/qrparm.orog_mean
+```
