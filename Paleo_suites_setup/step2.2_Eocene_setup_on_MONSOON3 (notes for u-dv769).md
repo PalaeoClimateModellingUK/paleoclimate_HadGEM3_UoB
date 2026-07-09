@@ -720,3 +720,33 @@ as
  38             UM_INITIAL_OZONE_ANCIL = $CYLC_WORKFLOW_SHARE_DIR/data/etc/ancil/qrclim.ozone
  39             UM_OROG_ANCIL = $CYLC_WORKFLOW_SHARE_DIR/data/etc/ancil/qrparm.orog_mean
 ```
+
+
+#### cylc broadcast don't work on ARCHER2
+
+**reason:**    
+[ARCHER2 use "task polling" for communication bettween puma2 and archer2](https://cms-helpdesk.ncas.ac.uk/t/broadcast-in-rose-suite-to-send-data-from-archer2-to-puma/425)
+
+**resolution:**    
+The broadcast is only used in the interactive ozone scheme.    
+Make the following changes in the 'ozone-redistribution.rc' to avoid the data not found error in `redistribute_ozone` and the error caused by attemption to archive ozone data to MASS, which is unreachable on ARCHER2.
+```
+  1 --- u-ea539/ozone-redistribution.rc 2026-07-09 11:25:35.220573000 +0100
+  2 +++ u-ea539_backup/ozone-redistribution.rc  2026-07-08 16:57:20.792124000 +0100
+  3 @@ -1,12 +1,12 @@
+  4  {% if RUN and POSTPROC and OZONE_REDISTRIBUTE %}
+  5  [scheduling]
+  6      [[graph]]
+  7 -        R1 = ants_package_build => contrib_package_build  => retrieve_ozone => coupled
+  8 +        R1 = ants_package_build => contrib_package_build  => retrieve_ozone
+  9          R1/0101T/P1Y = install_ainitial & install_ancil => retrieve_ozone
+ 10 -        0101T/P1Y ! R1 = contrib_package_build => redistribute_ozone
+ 11 -        0101T/P1Y ! R1 = """
+ 12 +        R1/0101T/P1Y = contrib_package_build => redistribute_ozone
+ 13 +        0101T/P1Y = """
+ 14  {% set PP_APP = 'postproc' + ('_atmos' if POSTPROC_SPLIT_MODEL  else '') + ('_transform' if POSTPROC_SPLIT_ARCHIVE else '') %}
+ 15 -{{PP_APP}}[-{{FMT}}] => retrieve_ozone => redistribute_ozone => coupled
+ 16 +{{PP_APP}}[-{{FMT}}] => retrieve_ozone => redistribute_ozone => coupled & rose_arch_ozone
+ 17  """
+ 18
+```
