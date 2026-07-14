@@ -750,3 +750,16 @@ Make the following changes in the 'ozone-redistribution.rc' to avoid the data no
  17  """
  18
 ```
+
+#### Can't find 'run_model' in coupled
+```
+ 18 [FAIL] run_model # return-code=127
+ 19 2026-07-14T17:21:03Z CRITICAL - failed/ERR
+```
+**reason:**     
+Something goes run with the PATH setting. I haven't found where controls it.
+**resolution:**     
+copy the script setting of [[RECON]] section into the [[COUPLED]] section in `flow.cylc`.
+```
+script = "{{TASK_RUN_COMMAND}} {{NON_RIGOROUS_PATH}}"
+```
