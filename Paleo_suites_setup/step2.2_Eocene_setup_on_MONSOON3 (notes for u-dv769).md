@@ -277,9 +277,10 @@ use_name='UPCOUP'
 ##### 2.1.1.d Tidal mixing at ridges (K1 and M2rowdrg)
 In both the GC3 and GC5 suites, `ln_tide=.false` that means the complicated tide scheme is not used in the model.
 
-However, there is another switch related to the tide mixing. it is `ln_zdftmx=.true.` and is still working for the piControl. `zdftmx` is the old parametrisation of mixing due to internal tides generated at ridges. It will make use of the fixed K1 and M2rowdrg.      
+However, there is another switch related to the tide mixing. it is `ln_zdftmx=.true.` and is still working for the piControl. `zdftmx` is the old parametrisation of mixing due to internal tides generated at ridges. It will make use of the fixed K1 and M2rowdrg. The files are derived from running a global tidal model with present-day bathymetry, and we don't have the ability to run it by ourselves.      
+(Above information is from Dave Storkey)     
 
-(Above information is from Dave Storkey)
+So, tantatively, we set `ln_zdftmx=.false.`
 
 ##### 2.1.1.e  background bottom turbulent kinetic energy (bfr_coef.nc)
 In the GC3 model, this keeps the same with piControl. However, the horizontal variation of bottom friction coefficient `nemo_cice > namelist > NEMO namelist> bottom boundary > bottom friction (nambfr) > ln_bfr2d` is set as false. This possibly means the `bfr_coef.nc` is not actually  used.    
@@ -289,7 +290,7 @@ swich the **`ln_boost`** to **`spatially uniform drag coefficient`** at `nemo > 
 ##### 2.1.1.f Lateral boundary condition on momentum Tidal (shlat2d.nc)
 shlat2d.nc seems to be related to the slip over the lateral boundary. For the modern, most ocean areas are set as free-slip. Only a few points like Gibraltar strait are set as 2 or 3.      
 
-In GC3.1 suite, this ancillary doesn't exist and is controled by some tricky setup in the source codes to generate the fmask.
+In GC3.1 suite, this ancillary doesn't exist and the this setup is controled by some tricky setup in the source codes to generate the fmask.
 The section is located at `./NEMOGCM/NEMO/OPA_SRC/DOM/dommsk.F90` and has the following contents:
 ```
 403       IF( cp_cfg == "orca" .AND. jp_cfg == 1 ) THEN   ! ORCA R1 configuration
@@ -338,9 +339,8 @@ The section is located at `./NEMOGCM/NEMO/OPA_SRC/DOM/dommsk.F90` and has the fo
 446       ENDIF
 ```
 
-To do it in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`. ln    
+To turn it off in the GC5, switch off `ln_shlat2d` at `nemo > namelist > Lateral boundaries > Momentum boundary condition`.    
 
-I also checked the NEMO source codes.
 
 **shlat2d.nc and brf_coef.nc**: These are ad hoc tunings in a few narrow straits to try to get the throughflow/exchange fluxes to match present day observations. Since you don’t know what these fluxes were in paleo times (maybe you have some idea?) I think it is going to be difficult to do anything sensible with this, and I’d be inclined to just turn these off (apart from the present-day configuration). You can turn these off by setting ln_shlat2d=.false. and ln_boost=.false. (from Dave Storkey)
 
@@ -352,6 +352,13 @@ Bcause we don't have any suitable geothermal_heating for Eocene, switch off `ln_
 
 ##### 2.1.1.h subassin (subbasins.nc)
 The `subbasins.nc` is not necessary for the model running. It will not be reqired if the switch ln_subbas which is located at `nemo > namelist > Diagnostics > Poleward Transports & Zonal means` is set as off. I thought it was only used in the calculation of zonal mean heat and salt transport.     
+
+##### 2.1.1.i mask_itf.nc    
+This is a simple 1/0 mask that identifies the (present-day) ITF region and applied increased tidal mixing (vertical mixing) in this region. Since the model doesn’t have explicit tides, mixing caused by the tides is parametrised (`ln_zdftmx`) and this (ad hoc) modification is applied in the ITF region to account for the fact that tidal mixing is thought to be strong in this region and important for setting the water mass properties of the throughflow water. The key thing is that the bathymetry is relatively shallow through many of the channels. I guess so long as there is an analogue of the ITF in paleo configurations it would be justifiable to continue to apply this, perhaps modifying the area mask to cover the modified ITF region. If you just wanted to turn this off the easiest is probably just to set mask_itf=0 everywhere.      
+
+Note that, with ln_zdftmx=.false. you won’t need mask_itf.    
+
+(Above information is from Dave Storkey)    
 
 #### 2.1.2  UM
 ##### 2.1.2.a Chlorophyll qrclim.sea (potential element)
