@@ -1,5 +1,5 @@
-In step2.2 we already built a Eocene suite on MONSOON3 (u-dv769). However, for the resource limitation on MONSOON3, the simulation runs very slow.     
-Therefore, we have a go to port the suite to ARCHER2.
+In step2.2 we have already built a Eocene suite on MONSOON3 (u-dv769). However, for the resource limitation on MONSOON3, the simulation runs very slow.     
+Therefore, we plan to test the suites on ARCHER2 instead. This note documented our effort to port the u-dv769 to ARCHER2 and some further modification on u-ea539 (the archer2 version of u-dv769).
 
 ## setting archer2_python_env
 The biggest challenge is the setting up of the python_env, which is used for the interactive ozone, on the ARCHER2. Different with MONSOON3, on archer2 there is no existing module like scitools or um_tool can be directly used in python_env (cray-python helps a lot, but it don't have iris). To make the ozoen scheme runnable on ARCHER2. I set up a python_env as below:
@@ -105,9 +105,14 @@ We note the key differences is the two pathes:
 ```
 Which is not contained in the system path in workflow.    
 Therefore, we add these two pathes into `PYTHONPATH` in python_env.
+
+
+
 ### AttributeError: 'NoneType' object has no attribute 'GDT_Int16'
 I didn't find gdal on ARCHER2. However, the GDAL is in fact not necessary for ants. This error seems to stem from a small flaw in the `ants/fileformats/raster.py`.    
-To fix this flaw, I `fcm co fcm:ancil_ants.xm/tags/2.0.0` as `/work/n02/n02/an25872/FCM/ancil_ants/2.0.0_zikun`. and make the changes as below:
+
+**resolution:**
+To fix this flaw, we `fcm co fcm:ancil_ants.xm/tags/2.0.0` as `/work/n02/n02/an25872/FCM/ancil_ants/2.0.0_zikun`. and make the changes as below:
 ```
                                                                                                33,1          All
 diff -ur 2.0.0/lib/ants/fileformats/raster.py 2.0.0_zikun/lib/ants/fileformats/raster.py
@@ -144,6 +149,28 @@ diff -ur 2.0.0/lib/ants/fileformats/raster.py 2.0.0_zikun/lib/ants/fileformats/r
      """A reference to the data payload of a single gdal raster band."""
 Only in 2.0.0: .svn
 ```
+### time dimension of "tropopause" cube is too long for ozone_redistribution
+job.err:
+```
+ 33 RuntimeError: The "tropopause" cube does not contain "[12, 24]" months worth of data
+ 34 [FAIL] python_env python ${CYLC_WORKFLOW_RUN_DIR}/src/contrib/redistribute_ozone.py -t $TROPOPAUSE_INPUT -r $OR    OGRAPHY_INPUT -d $DENSITY_INPUT -z $OZONE_INPUT -o $OZONE_OUTPUT -y $YEAR # return-code=1
+```
+**reason:**     
+Normally, after retrieve_ozone, The 'OZONE_SHARE' directory should only contains the `po stream` files from the previous two years relative to the current timestamp.     
+However, for unknown reason, files older than two years are still retained.
 
+**resolution:**    
+To resolve this issue, here we add a pre-script to delete the existing links before running the main script in the section [[retrieve_ozone]] which is contained in the ozone-redistribution.rc.
+```
+ 56     [[retrieve_ozone]]
+ 57         inherit = OZONE, OZONE_ARCHIVE_RESOURCE
+ 58         pre-script =  """
+ 59             mkdir -p ${DATAM}
++60             rm $OZONE_SHARE/*a.${SOURCE_STREAM}*.pp
+ 61             """
+ 62         [[[environment]]]
+ 63            ROSE_APP_OPT_CONF_KEYS = {{ 'updated' if OZONE_USE_UPDATED_ANCIL else '' }}
+ 64            PRIMARY_ARCHIVE_SOURCE = {{OZONE_PRIMARY_ARCHIVE}}
+ 65            SECONDARY_ARCHIVE_SOURCE = {{OZONE_SECONDARY_ARCHIVE}}
 
-
+```
