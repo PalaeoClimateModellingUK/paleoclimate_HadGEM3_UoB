@@ -66,6 +66,13 @@ For unknow reason, this `python_env` still don't work for our suite. But the 'mo
 
 With these setup, the `ozone_reistribute` finally works successfully.
 
+## Change the viscosity coefficients
+In u-dv769, the viscosity coefficients is [tentatively set as constant](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/main/Paleo_suites_setup/step2.2_Eocene_setup_on_MONSOON3%20(notes%20for%20u-dv769).md#211b-viscosity-coefficient-configuration-change) for the lack of `eddy_viscosity_3D.nc`.     
+
+Now, Gabriel have build up a workflow to generate the `eddy_viscosity_3D.nc` from the bathymetry file. Therefore, here we can set the `nn_ahm_ijk_t` at `nemo > namelist > Dynamics options (namdyn) > Lateral diffusion (namdyn_ldf)` back to `Read in from eddy_viscosity_3D.nc`.     
+
+The workflow to generate `eddy_viscosity_3D.nc` is over [here](https://github.com/pontesgm4/HadGEM3-GC5_palaeo/blob/main/step1_make_ocean/step2_make_eddy_viscosity.md#generating-the-eddy_viscosity_3dnc-file).
+
 
 ## DEBUG:
 ### python_env work in **command line** but fail in **workflow** for the missing of mule.
@@ -174,3 +181,6 @@ To resolve this issue, here we add a pre-script to delete the existing links bef
  65            SECONDARY_ARCHIVE_SOURCE = {{OZONE_SECONDARY_ARCHIVE}}
 
 ```
+
+### Can't find the compressed log on ARCHER2 with CYLC8
+On archer2, for cylc8, the history logs are kept on puma2. So try to find them on puma2 `~/cylc-run`.
