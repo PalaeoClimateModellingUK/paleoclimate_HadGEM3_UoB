@@ -173,7 +173,7 @@ To resolve this issue, here we add a pre-script to delete the existing links bef
  57         inherit = OZONE, OZONE_ARCHIVE_RESOURCE
  58         pre-script =  """
  59             mkdir -p ${DATAM}
-+60             rm $OZONE_SHARE/*a.${SOURCE_STREAM}*.pp
++60             rm -f $OZONE_SHARE/*a.${SOURCE_STREAM}*.pp
  61             """
  62         [[[environment]]]
  63            ROSE_APP_OPT_CONF_KEYS = {{ 'updated' if OZONE_USE_UPDATED_ANCIL else '' }}
