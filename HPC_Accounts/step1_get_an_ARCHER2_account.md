@@ -31,4 +31,4 @@ ARCHER2 is the UK’s national supercomputing service, designed to support high-
   # Tips
   ## Mule on archer2
   `module load cray-python`
-  
+   export PYTHONPATH=/work/y07/shared/umshared/lib/python3.9:/work/y07/shared/utils/core/bolt/0.8/modules:$PYTHONPATH
