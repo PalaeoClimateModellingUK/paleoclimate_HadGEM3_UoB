@@ -4,7 +4,7 @@ refer to `$UMDIR/ancil/data/ancil_versions/filenames/v9/ancils` for the default 
 refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/work/n02/n02/an25872/ancils/ancils_zikun/ancils_version/um_ancils_LGM2`) for the directory of UM ancillary.
 - **Land sea mask**    
   export UM_ANCIL_MASK_FILE=qrparm.mask    
-  export UM_ANCIL_MASK_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/land_sea_mask/etop01/PILGM4
+  export UM_ANCIL_MASK_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/land_sea_mask/etop01/PILGM4    
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/land_sea_mask/etop01/LGM2) 
 
 - **Land fractions**     
@@ -70,17 +70,17 @@ refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/wo
   export UM_ANCIL_TRIP_STOR_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/rivers_trip/storage/fekete/PILGM4
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/rivers_trip/storage/fekete/LGM) 
     
-- **Vegetation fractions**
+- **Vegetation fractions**    
   export UM_ANCIL_VEGFRAC_FILE=qrparm.veg.frac    
   export UM_ANCIL_VEGFRAC_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/vegetation/fractions_igbp/PILGM4
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/vegetation/fractions_igbp/LGM)
 
-- **Vegetation functional types**
+- **Vegetation functional types**    
   export UM_ANCIL_VEGFUNC_FILE=qrparm.veg.func    
   export UM_ANCIL_VEGFUNC_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/vegetation/func_type_modis/PILGM4
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/vegetation/func_type_modis/LGM)
   
-- **Ozone distribution**
+- **Ozone distribution**    
   export UM_ANCIL_OZONEL85O85=qrclim.ozone_L85_O85
   export UM_ANCIL_OZONE_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/ozone/sparc/1994-2005/LGM
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/ozone/sparc/1994-2005/LGM)
