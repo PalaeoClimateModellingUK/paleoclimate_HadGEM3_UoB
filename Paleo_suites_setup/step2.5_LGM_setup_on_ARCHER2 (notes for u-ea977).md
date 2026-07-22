@@ -56,7 +56,7 @@ Kenji set the orbital parameter by modifying the source codes, and I find a swit
 [The tickes authored by Alison McLaren](https://code.metoffice.gov.uk/trac/um/wiki/ticket/7847/TicketDetails).     
 `l_calc_orbprm_year` at `um > namelist > UM Science Settings > Shortwave`
 But this seem to be only work for UM of `vn13.9`.       
-For this suite, we switch on `l_sec_var` and hard write the year to be 21000 years before present by `fcm co fcm:um.xm_tr@vn13.8` as `/home/n02/n02/an25872/FCM/UM/vn13.8_orb_LGM`. In `src/atmosphere/radiation_control/orbprm.F90` add two lines:
+For this suite, we switch on `l_sec_var` and hard write the year to be 21000 years before present by `fcm co fcm:um.xm_tr@vn13.8` as `/home/n02/n02/an25872/FCM/UM/vn13.8_orb_LGM`. In `src/atmosphere/radiation_control/orbprm.F90` add three lines:
 ```
 100
 +++101  YEAR_LOCAL=-19000 ! hard-wire the year to be 21000 years before present
