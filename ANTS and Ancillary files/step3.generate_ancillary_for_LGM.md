@@ -78,6 +78,7 @@ refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/wo
 - **Vegetation functional types**
   export UM_ANCIL_VEGFUNC_FILE=qrparm.veg.func    
   export UM_ANCIL_VEGFUNC_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_PI/vegetation/func_type_modis/PILGM4
+  (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/mode_init/LGM)
   (/work/n02/n02/an25872/ancils/ancils_kenji/projects/n96e_orca/n96e_orca1_go6/vegetation/func_type_modis/LGM)
 
 **UKCA-GLOMAP mode ancillaries (ancillary/netcdf format)**     
