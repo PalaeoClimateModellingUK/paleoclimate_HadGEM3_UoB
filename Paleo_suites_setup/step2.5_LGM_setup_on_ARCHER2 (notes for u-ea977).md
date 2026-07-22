@@ -55,7 +55,41 @@ off now, will be on in the future. In piControl, the influence of iceberg is tre
 Kenji set the orbital parameter by modifying the source codes, and I find a switch in the new version of UM to make it easier.    
 [The tickes authored by Alison McLaren](https://code.metoffice.gov.uk/trac/um/wiki/ticket/7847/TicketDetails).     
 `l_calc_orbprm_year` at `um > namelist > UM Science Settings > Shortwave`
-But this seem to be only work for UM of `vn13.9`. 
+But this seem to be only work for UM of `vn13.9`.       
+For this suite, we switch on `l_sec_var` and hard write the year to be 21000 years before present by `fcm co fcm:um.xm_tr@vn13.8` as `/home/n02/n02/an25872/FCM/UM/vn13.8_orb_LGM`. In `src/atmosphere/radiation_control/orbprm.F90` add two lines:
+```
+100
++++101  YEAR_LOCAL=-19000 ! hard-wire the year to be 21000 years before present
+102
+103 IF (lhook) CALL dr_hook(ModuleName//':'//RoutineName,zhook_in,zhook_handle)
+104
+105 ! The length of the calendar year may be set for a 360-day calendar
+106 !  (as is often used in climate runs),
+107 !  or for a real Gregorian calendar which has 365 days in
+108 !  non-leap years and 366 in leap years.
+109 IF (lcal360) THEN
+110   diny=360.0
+111 ELSE
+112   ! Is this a leap year?
+113   IF (MOD(year,4)    ==  0 .AND.                                               &
+114      (MOD(year,400)  ==  0 .OR. MOD(year,100)  /=  0)) THEN
+115     diny = 366.0
+116     ! Is this a normal year?
+117   ELSE
+118     diny = 365.0
+119   END IF
+120 END IF
+121
+122 ! The orbital elements are normally set to default values, but
+123 ! secular variations may be required in some longer climate runs.
+124
+125 IF (l_sec_var) THEN
+126
++++127   year_offset = REAL( YEAR_LOCAL - year_ref )
+128
+
+```
+
 #### 2.4 green house gases(!!!!!!!!!not changed yet)
 #### 2.5 ln_zdftmx, ln_shlat2d, and ln_boost
 Off now, refer to [step2.2](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/8db2fc6870b03c4ac6ead3ce8699ad67c7442361/Paleo_suites_setup/step2.2_Eocene_setup_on_MONSOON3%20(notes%20for%20u-dv769).md#211d-tidal-mixing-at-ridges-k1-and-m2rowdrg) for further reason.
