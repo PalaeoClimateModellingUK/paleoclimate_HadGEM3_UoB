@@ -95,4 +95,25 @@ For this suite, we switch on `l_sec_var` and hard write the year to be 21000 yea
 Off now, refer to [step2.2](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/8db2fc6870b03c4ac6ead3ce8699ad67c7442361/Paleo_suites_setup/step2.2_Eocene_setup_on_MONSOON3%20(notes%20for%20u-dv769).md#211d-tidal-mixing-at-ridges-k1-and-m2rowdrg) for further reason.
 
 #### DEBUG
-##### 
+##### Seaice abnormally cumulated over the Arctica Ocean
+NEMO model crash suddenly, with no significant error in the output fields. 
+**reason:**    
+After closely checking the outputs of each timesteps (by adding the codes of below in the `app/nemo/file/file_def_nemo-oce.xml`), I found the `NaN` firstly appeared over the Arctica Ocean. Then I focus on this polar region, and find the sea ice thickness is abnormally increased with the model running. By checking the variables like sidmassth (sea-ice mass change from thermodynamics), sidmassgrowthbot (sea-ice mass change through basal growth), sst_m_bot (sea surface temperature), sitbot (temperature at the ice bottom), we find that over the area of seaice thickness increasing the SST is always about 0.3 degree colder than the ice bottom temperature. This should be the reason of continual ice growing. Then we further checked the temperature profile over this area. The results show that the temperature near the ocean bottom can reach -3 degree, which is inherited from the GC3.1 restart dump. With this unreal cold bottom water, the mixing causes a cooling effect to the SST, and maintains the difference bettween SST and sea ice bottom temperature, finally leads to the abnormal ice growing
+Above all, in the GC3.1 LGM suite reach an spurious balance. So, the model can run with unphysical ocean profile. With the update to GC5, the sea ice distribution was initialized for the application of si3, therefore the balance is broken.
+###### `app/nemo/file/file_def_nemo-oce.xml`     
+```
+ 12    <file_definition type="one_file" split_freq="1ts" split_freq_format="%y%mo%d_%h%mi%s" name="@expname@_@freq@" mi    n_digits="4">
+ 13
+ 14       <file_group id="1ts" output_freq="1ts"  output_level="10" enabled=".TRUE.">
+ 15
+ 16         <file id="file7" name_suffix="_grid_D" >
+ 17           <field field_ref="ssh"          name="zos"       />
+ 18           <field field_ref="sst_con"      name="tos_con"    />
+ 19           <field field_ref="sss_abs"      name="sos_abs"    />
+ 20
+ 21         </file>
+ 22       </file_group>
+ 23    </file_definition>
+```
+**resolution:**    
+switch on the initialization of NEMO.
