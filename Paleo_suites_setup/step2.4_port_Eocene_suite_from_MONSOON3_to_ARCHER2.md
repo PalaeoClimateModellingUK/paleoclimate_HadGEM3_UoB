@@ -73,6 +73,130 @@ Now, Gabriel have build up a workflow to generate the `eddy_viscosity_3D.nc` fro
 
 The workflow to generate `eddy_viscosity_3D.nc` is over [here](https://github.com/pontesgm4/HadGEM3-GC5_palaeo/blob/main/step1_make_ocean/step2_make_eddy_viscosity.md#generating-the-eddy_viscosity_3dnc-file).
 
+## Ozone scheme update
+The definition of tropopause demand being updated under extremely hot climate like Eocene.      
+Add `/home/n02/n02/an25872/FCM/UM/vn13.8_Seb_tropopause` to the `um_sources` under the `env` section under fcm_make_um.      
+The changes of this version is as listed below      
+```
+  1 --- vn13.8_Seb_tropopause/src/atmosphere/radiation_control/tropin.F90   2026-08-01 14:21:01.115905000 +0100
+  2 +++ vn13.8/src/atmosphere/radiation_control/tropin.F90  2026-08-01 14:15:43.775968000 +0100
+  3 @@ -115,10 +115,10 @@
+  4  ! ---------------------------------------------------------------------
+  5  ! Define local variables:----------------------------------------------
+  6
+  7 -INTEGER :: i, j, k, j0f, j1f, z,                                                  &
+  8 +INTEGER :: i, j, k, j0f, j1f,                                                  &
+  9                                      ! Loopers over level & point
+ 10 -!kun!     kp1,                                                                      &
+ 11 -!kun!     !  K+1, except where this would cause out-of-bounds reference
+ 12 +     kp1,                                                                      &
+ 13 +!     !  K+1, except where this would cause out-of-bounds reference
+ 14             nneigh,                                                             &
+ 15                              ! Number of well-defined tropopauses among
+ 16  !     ! the 8 nearest neighbours of a point without one of its own
+ 17 @@ -138,8 +138,7 @@
+ 18                        ! in SCUM code.
+ 19
+ 20
+ 21 -REAL(KIND=real_umphys) :: cp_over_g, p_exner_500, p_exner_1,
+ 22 -     layer_thickness, min_thickness, sum_thickness, avg_lapse_rate
+ 23 +REAL(KIND=real_umphys) :: cp_over_g, p_exner_500, p_exner_50
+ 24
+ 25  INTEGER(KIND=jpim), PARAMETER :: zhook_in  = 0
+ 26  INTEGER(KIND=jpim), PARAMETER :: zhook_out = 1
+ 27 @@ -164,15 +163,12 @@
+ 28    j1f = rows - 1
+ 29  END IF
+ 30  p_exner_500 = (500.0/1000.0)**kappa
+ 31 -p_exner_1  =  (1.0/1000.0)**kappa
+ 32 +p_exner_50  =  (50.0/1000.0)**kappa
+ 33  cp_over_g = cp / g
+ 34  dti = ( min_trop_level + max_trop_level ) / 2
+ 35
+ 36  ltrop = .TRUE.
+ 37
+ 38 -! height above current layer over which average lapse rate will be tested
+ 39 -min_thickness = 2000.
+ 40 -
+ 41  !     ! Compute lapse rate between full levels: equation 3.16, UMDP S1
+ 42
+ 43  !$OMP PARALLEL DO SCHEDULE(STATIC) DEFAULT(NONE)                               &
+ 44 @@ -199,61 +195,28 @@
+ 45  !$OMP END PARALLEL DO
+ 46
+ 47  !     ! 2.  Find level of tropopause, where it is well defined
+ 48 -!           WMO: "... defined as the lowest level at which the
+ 49 -!           lapse rate decreases to 2 degC km-1 or less, provided
+ 50 -!           that the average lapse rate between this level and
+ 51 -!           all higher levels within 2 km does not exceed 2 degC
+ 52 -!           km-1."
+ 53
+ 54  DO k=min_trop_level+1, max_trop_level
+ 55
+ 56 -!kun  ! 'K+1' level for lapse rate test; allows K iteration up to P_LEVELS
+ 57 -!kun  kp1=MIN(k+1,p_levels)
+ 58 +  ! 'K+1' level for lapse rate test; allows K iteration up to P_LEVELS
+ 59 +  kp1=MIN(k+1,p_levels)
+ 60
+ 61 -!$OMP PARALLEL DO SCHEDULE(STATIC) DEFAULT(NONE) PRIVATE(i,j,z)                  &
+ 62 +!$OMP PARALLEL DO SCHEDULE(STATIC) DEFAULT(NONE) PRIVATE(i,j)                  &
+ 63  !$OMP SHARED(rows,row_length,exner_theta_levels,lapse_rate,ltrop,IT_work,      &
+ 64 -!$OMP p_exner_1,p_exner_500,k,layer_thickness, min_thickness, sum_thickness, avg_lapse_rate)
+ 65 +!$OMP p_exner_50,p_exner_500,kp1,k)
+ 66    DO j = 1, rows
+ 67      DO i=1, row_length
+ 68
+ 69 -      ! check for potential tropopause (TP)
+ 70 -      IF ( exner_theta_levels(i,j,k-1)  >   p_exner_1 .AND.                   &
+ 71 +      !         ! Not-quite-WMO criteria for interval containing tropopause
+ 72 +      !         ! (where 'interval' stretches between layer centres k and k-1)
+ 73 +
+ 74 +      IF ( exner_theta_levels(i,j,k-1)  >   p_exner_50 .AND.                   &
+ 75             exner_theta_levels(i,j,k)  <   p_exner_500 .AND.                    &
+ 76 -           lapse_rate(i,j,k)  <   lapse_trop .AND. ltrop(i,j) )              &
+ 77 +           lapse_rate(i,j,k)  <   lapse_trop .AND.                             &
+ 78 +           lapse_rate(i,j,kp1)  <   lapse_trop .AND. ltrop(i,j) )              &
+ 79        THEN
+ 80 -        !kun!ltrop(i,j)=.FALSE.
+ 81 -        !kun!IT_work(i,j) = k
+ 82 -        ! potential TP found, check average lapse rate for 2km above current level
+ 83 -        sum_thickness = 0
+ 84 -        avg_lapse_rate = 0
+ 85 -
+ 86 -        ! average lapse-rate above potential TP layer
+ 87 -        DO z=k, p_levels
+ 88 -
+ 89 -          ! integrate layer thickness
+ 90 -          layer_thickness = ( t(i,j,z-1) - t(i,j,z) ) / lapse_rate(i,j,z)
+ 91 -          sum_thickness = sum_thickness + layer_thickness
+ 92 -          ! sum up lapse rates weighted by layer thickness
+ 93 -          avg_lapse_rate = avg_lapse_rate + lapse_rate(i,j,z) * layer_thickness
+ 94 -
+ 95 -          ! 2km thickness reached
+ 96 -          IF (sum_thickness >= min_thickness .OR. z == p_levels) THEN
+ 97 -
+ 98 -            ! weighted mean lapse rate over interval
+ 99 -            avg_lapse_rate = avg_lapse_rate / sum_thickness
+100 -
+101 -            ! check average lapse rate over interval following WMO definition
+102 -            IF (avg_lapse_rate <= lapse_trop) THEN
+103 -              ltrop(i,j) = .FALSE.
+104 -              IT_work(i,j) = k
+105 -            END IF
+106 -
+107 -            !stop lapse rate average calculation and continue with next point
+108 -            exit
+109 -
+110 -          END IF
+111 -        END DO
+112 -
+113 +        ltrop(i,j)=.FALSE.
+114 +        IT_work(i,j) = k
+115        END IF
+116      END DO
+117    END DO
+
+```
 
 ## DEBUG:
 ### python_env work in **command line** but fail in **workflow** for the missing of mule.
