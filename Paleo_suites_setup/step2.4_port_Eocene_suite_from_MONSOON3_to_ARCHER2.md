@@ -98,7 +98,7 @@ The changes of this version is as listed below
  18                        ! in SCUM code.
  19
  20
- 21 -REAL(KIND=real_umphys) :: cp_over_g, p_exner_500, p_exner_1,
+ 21 -REAL(KIND=real_umphys) :: cp_over_g, p_exner_500, p_exner_1,      &
  22 -     layer_thickness, min_thickness, sum_thickness, avg_lapse_rate
  23 +REAL(KIND=real_umphys) :: cp_over_g, p_exner_500, p_exner_50
  24
@@ -140,7 +140,7 @@ The changes of this version is as listed below
  60
  61 -!$OMP PARALLEL DO SCHEDULE(STATIC) DEFAULT(NONE) PRIVATE(i,j,z)                  &
  62 +!$OMP PARALLEL DO SCHEDULE(STATIC) DEFAULT(NONE) PRIVATE(i,j)                  &
- 63  !$OMP SHARED(rows,row_length,exner_theta_levels,lapse_rate,ltrop,IT_work,      &
+ 63  !$OMP SHARED(rows,row_length,exner_theta_levels,lapse_rate,ltrop,IT_work,p_levels,t,      &
  64 -!$OMP p_exner_1,p_exner_500,k,layer_thickness, min_thickness, sum_thickness, avg_lapse_rate)
  65 +!$OMP p_exner_50,p_exner_500,kp1,k)
  66    DO j = 1, rows
