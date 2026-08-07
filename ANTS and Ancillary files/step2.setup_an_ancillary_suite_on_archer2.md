@@ -4,6 +4,11 @@ We note that the workflow is composed by twp group of tasks. One for `CAP`(the o
 ### 1. python_env
 ### 2. enviroment variables.
 
+
+### 3. what to change for LGM?
+According to the ancillary suite for HadGEM2 (u-aj847), we should at least change the land-sea mask, orography and vegetation.
+
+Next step: read more about Charlie's guidance.
 ### DEBUG
 #### 1. ERROR related to escape character
 In `job.err` of `ancil_soil_roughness`:
