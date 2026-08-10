@@ -116,7 +116,8 @@ by Peltier (2004). `(Hopcroft et al., 2015)`
 - mineral dust:
   - For the LGM the source multiplier for mineral dust is expanded to cover new land gridcells and is set to zero over the Laurentide and Fennoscandian ice sheets. (Hopcroft et al., 2015)
   - In HadGEM2-ES the mineral dust cycle is coupled with the atmosphere and interactive vegetation (Bellouin et al., 2011; Woodward, 2011). Emissions are calculated as a function of dynamically determined bare soil area, soil moisture and wind speed. Emissions and atmospheric transport are calculated for six size bins which have radii of 0.0316–31.6 μm, with bin boundaries at 0.1, 0.316, 1.0, 3.16, and 10.0 μm. Dry and wet deposition are considered separately but direct dust-cloud interactions are not represented. Both pre-industrial and present-day simulations of mineral dust with HadGEM2-ES have been evaluated in previous studies (Bellouin et al., 2011; Fiedler et al., 2016; Hopcroft et al., 2015). (Hopcroft et al., 2023)
-- river routing
+- river routing：
+  - The river routing model has been modiffed for the LGM land-sea mask so that rivers do not terminate at land grid-cells. (Hopcroft et al., 2023)
 - fossil fuel black and organic carbon (set to zero)
 - topographic index field:
   - The topographic index field which determines the sub-grid hydrology was expanded to new land points at the LGM by deriving a logarithmic relationship between the topographic index mean and a measure of sub-grid orographic variability. (Hopcroft et al., 2023)
