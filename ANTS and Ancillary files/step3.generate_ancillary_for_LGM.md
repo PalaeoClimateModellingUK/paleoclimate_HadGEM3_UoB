@@ -90,5 +90,38 @@ refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/wo
   export UM_ANCIL_MODEINIT_FILE=qrclim.modeinit_L85      
   export UM_ANCIL_MODEINIT_DIR=/work/n02/n02/kizumi/projects/n96e_orca/n96e_orca1_go6/mode_init/LGM     
   (initial state; Not activated in Kenji's suite)
+## 1.2 NEMO
+- **Grid configuration (domain_cfg)**
+  source=/work/n02/n02/an25872/ancils/ancils_zikun/ancils_generate/GC5/domain_cfg_gen/LGM_ancil/LGMv2g/domain_cfg.nc
+- **eddy_viscosity_3D**
+  source=/work/n02/n02/an25872/ancils/ancils_zikun/ancils_generate/GC5/eddy_viscosity_3D/LGM_output_v2g/eddy_viscosity_3D.nc
+- **mask_itf.nc**
+  source=/work/n02/n02/an25872/ancils_additional/LGM/itf_mask/eORCA_R1_maskITF_v1.0_LGM.nc
+
+  
+# 2. How to generate these ancillary files?
+
+With the help from Peter Hopcroft, We basically knows how the above UM ancillary files were generated for LGM.     
+Firstly we will need a ancillary suite `u-cc111/GC5_N96_ORCA1_ancils`. In the [step2 under this session](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/dd08748838655f68b352cd884e82e011bca601a8/ANTS%20and%20Ancillary%20files/step2.setup_an_ancillary_suite_on_archer2.md), we have successfully set up an runnable Ancillary suite (u-dz309) on ARCHER2. The next step to do so is transitioned the setup of it into a LGM one.
+
+## 2.1 What to be changed in the ancillary suite (still in update and modification).
+The main target of ancillary suite is to make a suite of consistent ancillary files based on the so-called master files (my understanding is the original files includes all the information about boundary conditions).     
+According to the [previous work of Peter](https://link.springer.com/article/10.1007/s00382-014-2421-0), There is basically three kinds of master files demanding a transition to LGM:
+- land-sea mask and topography:
+  - changes to the orography, land sea mask and land ice as recon-structed
+by Peltier (2004). `(Hopcroft et al., 2015)`
+  -  The boundary conditions appropriate for 21 kyr BP are ice-sheet area, topography and sea-level from ICE-5G (Peltier, 2004) `(Hopcroft et al., 2023)`
+- Vegetation (dynamic vegetation for HadGEM2?)
+- mineral dust:
+  - For the LGM the source multiplier for mineral dust is expanded to cover new land gridcells and is set to zero over the Laurentide and Fennoscandian ice sheets. (Hopcroft et al., 2015)
+  - In HadGEM2-ES the mineral dust cycle is coupled with the atmosphere and interactive vegetation (Bellouin et al., 2011; Woodward, 2011). Emissions are calculated as a function of dynamically determined bare soil area, soil moisture and wind speed. Emissions and atmospheric transport are calculated for six size bins which have radii of 0.0316–31.6 μm, with bin boundaries at 0.1, 0.316, 1.0, 3.16, and 10.0 μm. Dry and wet deposition are considered separately but direct dust-cloud interactions are not represented. Both pre-industrial and present-day simulations of mineral dust with HadGEM2-ES have been evaluated in previous studies (Bellouin et al., 2011; Fiedler et al., 2016; Hopcroft et al., 2015). (Hopcroft et al., 2023)
+- river routing
+- fossil fuel black and organic carbon (set to zero)
+- topographic index field:
+  - The topographic index field which determines the sub-grid hydrology was expanded to new land points at the LGM by deriving a logarithmic relationship between the topographic index mean and a measure of sub-grid orographic variability. (Hopcroft et al., 2023)
+  - The topographic index ffeld which determines the sub-grid hydrology was expanded to new land points at the LGM by deriving a logarithmic relationship between the topographic index mean and a measure of sub-grid orographic variability. The latter was calculated at a resolution of 10 arc minutes using the global ETOPO1 data set (Armante and Eakins 2009). This orographic roughness ffeld was then regridded to the resolution of an existing topographic index ffeld (0.83° × 0.55°: N. Gedney, personal communication) in order to calculate the logarithmic relationship parameters used to derive the topographic index over new land points. The resultant globally resolved topographic index was ffnally regridded to the resolution required in HadGEM2 (1.875° × 1.25°). (Hopcroft et al., 2015)
+
+Except for these ancils, the others are kept the same as piControl:
+- aerosol emissions of sulphur dioxide, DMS, biogenic and biomass aerosols
 
 
