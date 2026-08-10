@@ -1,4 +1,4 @@
-# 1.Check the ancillary files requiring change in the transition from piControl to LGM
+<img width="1744" height="588" alt="image" src="https://github.com/user-attachments/assets/d09671ca-db48-48ac-b423-eb6c264306d4" /># 1.Check the ancillary files requiring change in the transition from piControl to LGM
 ## 1.1 UM
 refer to `$UMDIR/ancil/data/ancil_versions/filenames/v9/ancils` for the default name of UM ancillary files
 refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/work/n02/n02/an25872/ancils/ancils_zikun/ancils_version/um_ancils_LGM2`) for the directory of UM ancillary.
@@ -104,13 +104,29 @@ refer to `/home/n02/n02/an25872/work/ancils/ancils_kenji/um_ancils_PILGM4` (`/wo
 With the help from Peter Hopcroft, We basically knows how the above UM ancillary files were generated for LGM.     
 Firstly we will need a ancillary suite `u-cc111/GC5_N96_ORCA1_ancils`. In the [step2 under this session](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/dd08748838655f68b352cd884e82e011bca601a8/ANTS%20and%20Ancillary%20files/step2.setup_an_ancillary_suite_on_archer2.md), we have successfully set up an runnable Ancillary suite (u-dz309) on ARCHER2. The next step to do so is transitioned the setup of it into a LGM one.
 
-## 2.1 What to be changed in the ancillary suite (still in update and modification).
+## 2.1 What to be changed in the UM ancillary suite (still in update and modification).
 The main target of ancillary suite is to make a suite of consistent ancillary files based on the so-called master files (my understanding is the original files includes all the information about boundary conditions).     
 According to the [previous work of Peter](https://link.springer.com/article/10.1007/s00382-014-2421-0), There is basically three kinds of master files demanding a transition to LGM:
 - land-sea mask and topography:
   - changes to the orography, land sea mask and land ice as recon-structed
 by Peltier (2004). `(Hopcroft et al., 2015)`
   -  The boundary conditions appropriate for 21 kyr BP are ice-sheet area, topography and sea-level from ICE-5G (Peltier, 2004) `(Hopcroft et al., 2023)`
+  -  For coupling model:
+    -  Starting from the **ORCA1 1° bathymetry**, the following modifications were applied:
+      1. **Global mean LGM sea-level change**
+         - A global mean sea-level drop of **115 m** was applied.
+
+      2. **Removal of land-locked ocean grid points**
+         - Single ocean grid points that were completely **land-locked** were removed.
+
+      3. **Re-introduction of the Caspian Sea**
+         - The **Caspian Sea** was re-introduced using the same configuration as in the **modern bathymetry**.
+
+      4. **LGM ice-sheet reconstruction**
+         - The **ICE-6G ice-sheet area** was re-gridded onto the **NEMO tri-polar grid**.
+         - The re-gridded ice-sheet area was then used to fill:
+            - **(i)** Hudson Bay
+            - **(ii)** Areas where the LGM ice sheet extended over the present-day ocean around **Scandinavia**
 - Vegetation (dynamic vegetation for HadGEM2?)
 - mineral dust:
   - For the LGM the source multiplier for mineral dust is expanded to cover new land gridcells and is set to zero over the Laurentide and Fennoscandian ice sheets. (Hopcroft et al., 2015)
@@ -124,4 +140,4 @@ by Peltier (2004). `(Hopcroft et al., 2015)`
 Except for these ancils, the others are kept the same as piControl:
 - aerosol emissions of sulphur dioxide, DMS, biogenic and biomass aerosols
 
-
+## 2.2 How to build the 
