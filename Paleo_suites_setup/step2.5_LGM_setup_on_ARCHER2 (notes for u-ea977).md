@@ -131,10 +131,41 @@ By checking the sea-ice growth related variables, we found the main contributor 
 **reason:**
 To further uncover the cause of this abnormal sea-ice growth. We look into the source codes of NEMO-SI3.
 And we found that the `sidmassgrowthwat` is basically controlled by two elements:
-- `the specific enthalpy difference bettween seawater and forming ice [J/kg]` 
+- `zdE: the specific enthalpy difference bettween seawater and forming ice [J/kg]`
+- `qlead: heat balance of the lead (or of the open ocean)`
+The mass of ice growth from frazil is calculated as the division of qlead by the specific enthalpy difference zdE. The resulting mass is then converted to ice volume using the ice density rhoi. When the 
 
 
-NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/ice.F90
+**NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/icethd_do.F90**   
+```
+278          ! --- Volume of new ice --- !
+279          DO ji = 1, npti
+280
+281             zEi           = - ze_newice(ji) * r1_rhoi              ! specific enthalpy of forming ice [J/kg]
+282
+283             zEw           = rcp * ( t_bo_1d(ji) - rt0 )            ! specific enthalpy of seawater at t_bo_1d [    J/kg]
+284                                                                    ! clem: we suppose we are already at the fre    ezing point (condition qlead<0 is satisfyied)
+285
+286             zdE           = zEi - zEw                              ! specific enthalpy difference [J/kg]
+287
+288             zfmdt         = - qlead_1d(ji) / zdE                   ! Fm.dt [kg/m2] (<0)
+289                                                                    ! clem: we use qlead instead of zqld (icethd    ) because we suppose we are at the freezing point
+290             zv_newice(ji) = - zfmdt * r1_rhoi
+291
+292             zQm           = zfmdt * zEw                            ! heat to the ocean >0 associated with mass     flux
+293
+294             ! Contribution to heat flux to the ocean [W.m-2], >0
+295             hfx_thd_1d(ji) = hfx_thd_1d(ji) + zfmdt * zEw * r1_rdtice
+296             ! Total heat flux used in this process [W.m-2]
+297             hfx_opw_1d(ji) = hfx_opw_1d(ji) - zfmdt * zdE * r1_rdtice
+298             ! mass flux
+299             wfx_opw_1d(ji) = wfx_opw_1d(ji) - zv_newice(ji) * rhoi * r1_rdtice
+300             ! salt flux
+301             sfx_opw_1d(ji) = sfx_opw_1d(ji) - zv_newice(ji) * rhoi * zs_newice(ji) * r1_rdtice
+302          END DO
+```
+
+**NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/ice.F90**    
 ```
 238    REAL(wp), PUBLIC, PARAMETER ::   epsi06 = 1.e-06_wp  !: small number
 239    REAL(wp), PUBLIC, PARAMETER ::   epsi10 = 1.e-10_wp  !: small number
