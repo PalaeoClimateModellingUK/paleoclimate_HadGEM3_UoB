@@ -95,7 +95,7 @@ For this suite, we switch on `l_sec_var` and hard write the year to be 21000 yea
 Off now, refer to [step2.2](https://github.com/PalaeoClimateModellingUK/paleoclimate_HadGEM3_UoB/blob/8db2fc6870b03c4ac6ead3ce8699ad67c7442361/Paleo_suites_setup/step2.2_Eocene_setup_on_MONSOON3%20(notes%20for%20u-dv769).md#211d-tidal-mixing-at-ridges-k1-and-m2rowdrg) for further reason.
 
 #### DEBUG
-##### Seaice abnormally cumulated over the Arctica Ocean
+##### Seaice abnormally cumulated over the Arctica Ocean (first 10 years)
 NEMO model crash suddenly, with no significant error in the output fields. 
 **reason:**    
 After closely checking the outputs of each timesteps (by adding the codes of below in the `app/nemo/file/file_def_nemo-oce.xml`), I found the `NaN` firstly appeared over the Arctica Ocean. Then I focus on this polar region, and find the sea ice thickness is abnormally increased with the model running. By checking the variables like sidmassth (sea-ice mass change from thermodynamics), sidmassgrowthbot (sea-ice mass change through basal growth), sst_m_bot (sea surface temperature), sitbot (temperature at the ice bottom), we find that over the area of seaice thickness increasing the SST is always about 0.3 degree colder than the ice bottom temperature. This should be the reason of continual ice growing. Then we further checked the temperature profile over this area. The results show that the temperature near the ocean bottom can reach -3 degree, which is inherited from the GC3.1 restart dump. With this unreal cold bottom water, the mixing causes a cooling effect to the SST, and maintains the difference bettween SST and sea ice bottom temperature, finally leads to the abnormal ice growing
@@ -117,3 +117,31 @@ Above all, in the GC3.1 LGM suite reach an spurious balance. So, the model can r
 ```
 **resolution:**    
 switch on the initialization of NEMO.
+
+##### Seaice abnormally cumulated over the Arctica Ocean (after 30years' running)
+time series of Arctic on-site `sithic`(sea-ice thickness):    
+<img width="1364" height="870" alt="e0141142-4583-4c58-8e4f-3c9582cd8fb6" src="https://github.com/user-attachments/assets/c1f92d4e-0b96-41f5-8727-df3f9aca3c0a" />
+time series of Arctic on-site `sidmassgrowthwat`(sea-ice mass change through growth in supercooled open water(frazil)):    
+<img width="1287" height="855" alt="ababf5198b4a9a3dda0bb1f034b04c03" src="https://github.com/user-attachments/assets/554786e5-9be2-4ef7-8f65-1253a5847328" />
+By checking the sea-ice growth related variables, we found the main contributor to this abnormal sea-ice thickness is the **sidmassgrowthwat (ice-growth in supercooled open water)**, which happened over the fully ice-covered area. And the growth rate jumped at a tipping-point of about the 3rd decade. After a more careful investigation, we found this tipping-point is also the timepoint that `sitbot (temperature at the ice bottom)` and `sst_m_pot(sea surface temperature under the seaice)` Almost simultaneously reached -1.9 and got coupled again.
+`sitbot (temperature at the ice bottom)`:    
+<img width="990" height="609" alt="4ba9e7782c36bb481d07e4df647c8c79" src="https://github.com/user-attachments/assets/d3d41bdc-2bd5-433b-9d0b-607e51a87723" />
+`sst_m_pot(sea surface temperature under the seaice)`:
+<img width="992" height="609" alt="4920dd69942e31ea4377beeacaad8146" src="https://github.com/user-attachments/assets/b74df146-e866-438e-b156-517abe8f8c96" />    
+**reason:**
+To further uncover the cause of this abnormal sea-ice growth. We look into the source codes of NEMO-SI3.
+And we found that the `sidmassgrowthwat` is basically controlled by two elements:
+- `the specific enthalpy difference bettween seawater and forming ice [J/kg]` 
+
+
+NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/ice.F90
+```
+238    REAL(wp), PUBLIC, PARAMETER ::   epsi06 = 1.e-06_wp  !: small number
+239    REAL(wp), PUBLIC, PARAMETER ::   epsi10 = 1.e-10_wp  !: small number
+240    REAL(wp), PUBLIC, PARAMETER ::   epsi20 = 1.e-20_wp  !: small number
+
+```
+
+
+
+
