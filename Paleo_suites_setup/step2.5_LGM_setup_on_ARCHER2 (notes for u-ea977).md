@@ -185,3 +185,17 @@ If you hope the JASMIN directory named as the name of your suite, you should cha
 +204                RUNID = `echo -n $CYLC_WORKFLOW_NAME_BASE`
 ```
 
+##### How to add undefault output variables in NEMO or SI3?
+The outputs of NEMO or SI3 is controlled by a series of .xml files:
+- context_nemo.xml: the trunk file, defines the `Field definition`, `file definition` and `grid definition`.
+  in the work directory, it is copied from `source=$DIAG_XML_DIR/context_nemo-$DIAGNOSTICS.xml` as set in `app/nemo/rose-app.conf`
+- field_def_nemo-oce.xml: defines the variables, which can be outputted.
+  It is copied to the work directory from `$CYLC_SUITE_SHARE_DIR/fcm_make_ocean/build-ocean/etc/field_def_nemo-oce.xml`.
+  And the `$CYLC_SUITE_SHARE_DIR/fcm_make_ocean/build-ocean/etc/field_def_nemo-oce.xml` is copied from `nemo/cfgs/SHARED/field_def_nemo-oce.xml`
+- file_def_nemo-oce.xml: defines the files to be outputted, and the variables contained in each files.
+  It is copied to work directory from the `app/nemo/file/file_def_nemo-oce.xml`.
+
+if you want to add new output variables unclaimed in the source codes, there will be three locations you need to make some changes.
+1. source codes:
+2. field_def_nemo-oce.xml or field_def_nemo-ice.xml:
+3. file_def
