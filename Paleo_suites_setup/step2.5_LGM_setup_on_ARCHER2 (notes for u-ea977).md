@@ -136,8 +136,7 @@ And we found that the `sidmassgrowthwat` is basically controlled by two elements
 The mass of ice growth from frazil is calculated as the division of qlead by the specific enthalpy difference zdE. The resulting mass is then converted to ice volume using the ice density rhoi.
 This provides a potential explanation for the persistent and abnormal sea-ice growth. As the sea-surface temperature approaches the local freezing point, the thermodynamic state of the seawater becomes increasingly close to that of the newly formed ice. Consequently, the specific enthalpy difference zdE between seawater and forming ice becomes small. Since the frazil-ice growth is calculated approximately as qlead / zdE, even a relatively small qlead can therefore produce a large sidmassgrowthwat. In other words, once the open water becomes sufficiently close to the freezing point, only a small amount of energy removal is required to generate a relatively large amount of frazil ice.     
 This process is further enhanced by the treatment of sea-ice concentration in SI3. The ice fraction is capped at a maximum value of 0.997, leaving a small fraction of open water even when the grid cell is almost completely covered by ice. As a result, the frazil-ice growth term sidmassgrowthwat can continue to operate through the remaining open-water fraction, rather than being completely shut down by increasing ice concentration. More importantly, the resulting growth can occur without fully accounting for the strong insulating effect that would otherwise develop as the ice becomes increasingly thick. Therefore, a positive qlead combined with a small zdE can lead to continued ice growth, creating a positive feedback in which the ice thickness keeps increasing even after the surface temperature has reached the freezing point.
-refer to [SI3_manual](https://zenodo.org/records/7534900) for more infomation.
-
+refer to section 1.5.2 of [SI3_manual](https://zenodo.org/records/7534900) for more infomation.     
 **NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/icethd_do.F90**   
 ```
 278          ! --- Volume of new ice --- !
@@ -166,7 +165,6 @@ refer to [SI3_manual](https://zenodo.org/records/7534900) for more infomation.
 301             sfx_opw_1d(ji) = sfx_opw_1d(ji) - zv_newice(ji) * rhoi * zs_newice(ji) * r1_rdtice
 302          END DO
 ```
-
 **NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/ice.F90**    
 ```
 238    REAL(wp), PUBLIC, PARAMETER ::   epsi06 = 1.e-06_wp  !: small number
@@ -174,6 +172,15 @@ refer to [SI3_manual](https://zenodo.org/records/7534900) for more infomation.
 240    REAL(wp), PUBLIC, PARAMETER ::   epsi20 = 1.e-20_wp  !: small number
 
 ```
+**resolution:**
+To resolve this issue, we must make use of an existing threshold inspection, the relevant code block is shown as below:
+200             ! If the grid cell is almost fully covered by ice (no leads)
+201             ! => stop ice formation in open water
+202             IF( at_i(ji,jj) >= (1._wp - epsi10) )   qlead(ji,jj) = 0._wp
+203             !
+This if statement means that when a grid cell is nearly fully covered by sea ice, qlead is set to zero, because there is essentially no open-water lead remaining within the sea ice. However, in the default setup of piControl, the threshold can never reach, for the ice fraction is capped at a maximum value of 0.997.      
+To make this threshold works correctly, we replace `epsi10` with 0.01_wp. Then, the model works correctly.
+
 
 ##### PPTRANSFER ONLY cover existing RUN_ID
 When you pptransfer your data to JASMIN. There will be a directory established on the JASMIN.     
@@ -196,6 +203,19 @@ The outputs of NEMO or SI3 is controlled by a series of .xml files:
   It is copied to work directory from the `app/nemo/file/file_def_nemo-oce.xml`.
 
 if you want to add new output variables unclaimed in the source codes, there will be three locations you need to make some changes.
-1. source codes:
-2. field_def_nemo-oce.xml or field_def_nemo-ice.xml:
-3. file_def
+1. source codes: take the qlead for example. add the following block in the following file.
+NEMO_4.0.4_GOSI9_package_16448_N216_GC5c/src/ICE/iceupdate.F90:
+```
+261       IF( iom_use('qlead'   ) )   CALL iom_put( 'qlead'   , qlead * r1_rdtice                                                     )   !  heat balance of the lead (or of the open ocean)
+262
+```
+2. field_def_nemo-ice.xml:
+nemo/cfgs/SHARED/field_def_nemo-ice.xml
+```
+112           <field id="qlead"       long_name="heat balance of the lead (or of the open ocean)"                                                                                    unit="W/m2"     />
+```
+3. file_def_nemo-ice.xml:
+app/si3/file/file_def_nemo-ice.xml
+```
+73        <field field_ref="qlead"            name="qlead"  />
+```
