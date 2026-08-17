@@ -175,6 +175,13 @@ refer to [SI3_manual](https://zenodo.org/records/7534900) for more infomation.
 
 ```
 
-
-
+##### PPTRANSFER ONLY cover existing RUN_ID
+When you pptransfer your data to JASMIN. There will be a directory established on the JASMIN.     
+The name of this directory will be set as `$RUNID` but not the name of your workflow (for example u-ea977_test(ARCHER2) > u-ea977(JASMIN) ).     
+**resolution:**
+If you hope the JASMIN directory named as the name of your suite, you should change the definition of RUN_ID at flow.cylc. 
+```
+-204                RUNID = `echo -n $CYLC_WORKFLOW_NAME_BASE | cut -d - -f 2 | cut -c 1-5`
++204                RUNID = `echo -n $CYLC_WORKFLOW_NAME_BASE`
+```
 
