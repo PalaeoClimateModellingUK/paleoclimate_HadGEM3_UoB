@@ -308,3 +308,25 @@ To resolve this issue, here we add a pre-script to delete the existing links bef
 
 ### Can't find the compressed log on ARCHER2 with CYLC8
 On archer2, for cylc8, the history logs are kept on puma2. So try to find them on puma2 `~/cylc-run`.
+
+
+### spurious non convergence of ocean volume for the Eocene suite
+<img width="2967" height="1768" alt="global_ocean_mean_salinity_abs" src="https://github.com/user-attachments/assets/b89bcef8-d7a7-4ebc-90c8-58aa2b56d3d8" />
+
+<img width="2967" height="1768" alt="global_ocean_mean_salinity" src="https://github.com/user-attachments/assets/855b97b9-7e09-4ef1-b4e4-3923eaed90ec" />
+
+
+<img width="2967" height="1768" alt="global_ocean_mean_temperature_abs" src="https://github.com/user-attachments/assets/cca27a63-2278-4107-8c4e-7c45531fee83" />
+
+<img width="2967" height="1768" alt="global_ocean_mean_temperature" src="https://github.com/user-attachments/assets/faef8138-a293-4f0b-960d-89c8a6250390" />
+
+<img width="2967" height="1768" alt="global_ocean_volume_abs" src="https://github.com/user-attachments/assets/3cf8bd49-56e6-419a-aed9-bd3da1385e5c" />
+
+<img width="2967" height="1768" alt="realtime_global_ocean_mean_salinity" src="https://github.com/user-attachments/assets/b71d22e1-170c-49ee-833d-ef38d9229911" />
+
+<img width="2967" height="1768" alt="global_ocean_mean_zos" src="https://github.com/user-attachments/assets/ffa9cc77-fe99-4a88-b7f8-f8a52ecd625c" />
+
+<img width="2967" height="1768" alt="global_ocean_mean_zos_abs" src="https://github.com/user-attachments/assets/03340f7c-5652-4c5e-86bb-85fffe5e4d48" />
+
+
+
