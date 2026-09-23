@@ -250,4 +250,6 @@ app/si3/file/file_def_nemo-ice.xml
 Warning in umPrintMgr: umPrintExceptionHandler : Handler Invoked
 MPICH ERROR [Rank 83] [job id 15291380.0] [Mon Sep 21 04:07:33 2026] [nid002603] - Abort(9) (rank 83 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 9) - process 83
 
-
+##### Tips for debugging
+- Change the `PRINT_STATUS` at `um > env > Runtime Controls > Atmosphere only` to `Extra diagnostic messages`
+- Open the `l_print_max_wind` and `l_diag_wind` 
