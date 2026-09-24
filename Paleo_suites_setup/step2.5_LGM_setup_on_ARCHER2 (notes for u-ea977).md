@@ -250,6 +250,56 @@ app/si3/file/file_def_nemo-ice.xml
 Warning in umPrintMgr: umPrintExceptionHandler : Handler Invoked
 MPICH ERROR [Rank 83] [job id 15291380.0] [Mon Sep 21 04:07:33 2026] [nid002603] - Abort(9) (rank 83 in comm 0): application called MPI_Abort(MPI_COMM_WORLD, 9) - process 83
 
+##### lib-4211 : UNRECOVERABLE library error; A WRITE operation tried to write a record that was too long.
+While diagnosing a crash in a **GC3 model run**, I increased the diagnostic output by changing:
+
+```ini
+PRINT_STATUS=PrStatus_Normal
+```
+
+to:
+
+```ini
+PRINT_STATUS=PrStatus_Diag
+```
+
+After this change, the model failed almost immediately with:
+
+```text
+lib-4211 : UNRECOVERABLE library error
+
+A WRITE operation tried to write a record that was too long.
+
+Encountered during a sequential formatted WRITE to an internal file (character variable)
+```
+
+The last output before the error was related to OASIS initialization:
+
+```text
+(oasis_mem_print) memory use (MB) =       645.7230       64.2170 (oasis_init_comp)
+```
+
+The `lib-4211` error only appeared after enabling `PrStatus_Diag`. The error indicates that a formatted `WRITE` to an internal character variable attempted to write a record longer than the allocated character variable. Therefore, this appears to be triggered by the additional diagnostic output rather than by OASIS itself, and is separate from the original model crash.
+
+A very similar issue was reported in [NCAS Helpdesk ticket #2095](https://cms-helpdesk.ncas.ac.uk/t/lib-4171-unrecoverable-library-error/2095).
+
+The suggested workaround is to change back to:
+
+```ini
+PRINT_STATUS=PrStatus_Normal
+```
+
+and enable forced flushing of the output:
+
+```ini
+[namelist:prnt_control]
+prnt_force_flush=.true.
+```
+
+This keeps the normal diagnostic level while ensuring that output is flushed more frequently, so that messages immediately before the original model crash are more likely to be preserved without triggering the `lib-4211` error.
+
+
+
 ##### Tips for debugging
 - Change the `PRINT_STATUS` at `um > env > Runtime Controls > Atmosphere only` to `Extra diagnostic messages`
 - Open the `l_print_max_wind` and `l_diag_wind` 
