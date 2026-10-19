@@ -770,3 +770,15 @@ copy the script setting of [[RECON]] section into the [[COUPLED]] section in `fl
 ```
 script = "{{TASK_RUN_COMMAND}} {{NON_RIGOROUS_PATH}}"
 ```
+
+#### [FAIL] fcm:nemo: location keyword not defined
+
+**Reason:**
+The older postprocessing FCM configuration is incompatible with the MONSOON3 environment.
+
+**Resolution:**
+Update `config_rev` in the existing `[env]` section of `app/fcm_make_pp/rose-app.conf` to use the corrected configuration:
+
+```ini
+config_rev=@5723
+```
