@@ -774,10 +774,10 @@ script = "{{TASK_RUN_COMMAND}} {{NON_RIGOROUS_PATH}}"
 #### [FAIL] fcm:nemo: location keyword not defined
 
 **Reason:**
-The older postprocessing FCM configuration is incompatible with the MONSOON3 environment.
+The older postprocessing FCM configuration at `@5515` (`@postproc_2.5`) is incompatible with the MONSOON3 environment.
 
 **Resolution:**
-Update `config_rev` in the existing `[env]` section of `app/fcm_make_pp/rose-app.conf` to use the corrected configuration:
+Update `config_rev` from `@postproc_2.5` to `@5723` in the existing `[env]` section of `app/fcm_make_pp/rose-app.conf` to use the corrected configuration:
 
 ```ini
 config_rev=@5723
