@@ -798,3 +798,98 @@ This may have resulted from Mule being unavailable during an earlier postproc ru
 Back up the original annual PP file and use Mule to create a separate deduplicated file. For this file, retain the `LBPROJ=802` records after checking that duplicate data values and missing-data locations agree. Remove the 255 extra density records and three extra tropopause records, then verify that each field loads as one complete 12-month cube. The full ozone redistribution test succeeded with the cleaned file.
 
 Replace the annual PP input with the validated file and retrigger the failed `redistribute_ozone` task. Keep the ozone diagnostic writing process consistent with Mule, and check Mule availability in the postproc job environment to avoid mixing Mule and Iris output.
+
+**Deduplication code used for this case:**
+
+The following command was tested on the original, duplicated `run32` file. It writes a separate test file without changing the original. The expected counts, header exceptions and choice of `LBPROJ=802` are specific to this diagnosed file, not a general rule for all PP files. Do not rerun it on the already cleaned file: the duplicate-count assertion will stop it. Mule performs the PP reading and writing; Iris is used only to validate the resulting cubes.
+
+```bash
+pp_run="$HOME/cylc-run/u-dv769/run32"
+"$pp_run/share/bin/python_env" python -B - <<'PY'
+import os
+import tempfile
+from collections import defaultdict
+import numpy as np
+import iris
+from mule.pp import fields_from_pp_file, fields_to_pp_file
+
+src = os.path.expanduser(
+    "~/cylc-run/u-dv769/run32/share/data/History_Data/dv769a.po3128.pp"
+)
+fields = fields_from_pp_file(src)
+groups = defaultdict(list)
+for i, f in enumerate(fields):
+    if f.lbuser4 in (253, 30453):
+        key = (f.lbuser4,) + tuple(f.raw[1:13]) + (f.lblev,)
+        groups[key].append(i)
+
+drop = set()
+removed = defaultdict(int)
+# Storage headers and the metadata differences inspected for this file.
+allowed = {
+    253: {15, 21, 29, 30, 31, 32, 40, 51, 63},
+    30453: {15, 21, 26, 29, 30, 31, 40, 51, 52, 63},
+}
+
+for key, ids in groups.items():
+    if len(ids) == 1:
+        continue
+    preferred = [i for i in ids if fields[i].lbproj == 802]
+    assert len(ids) == 2 and len(preferred) == 1, key
+    keep = preferred[0]
+    a = fields[keep]
+    for i in ids:
+        if i == keep:
+            continue
+        b = fields[i]
+        assert b.lbproj == 0, key
+        x, y = a.get_data(), b.get_data()
+        assert np.array_equal(x, y, equal_nan=True), ("Data differ", key)
+        assert np.array_equal(x == a.bmdi, y == b.bmdi), (
+            "Missing-data locations differ", key
+        )
+        differences = [
+            j for j in range(1, 65)
+            if j not in allowed[key[0]]
+            and not np.array_equal(
+                np.asarray(a.raw[j]), np.asarray(b.raw[j]),
+                equal_nan=True
+            )
+        ]
+        assert not differences, ("Other header differences", key, differences)
+        drop.add(i)
+        removed[key[0]] += 1
+
+assert dict(removed) == {253: 255, 30453: 3}, dict(removed)
+outdir = tempfile.mkdtemp(
+    prefix="ozone_dedup_test_", dir=os.path.expanduser("~")
+)
+dst = os.path.join(outdir, os.path.basename(src))
+fields_to_pp_file(dst, [
+    f for i, f in enumerate(fields) if i not in drop
+])
+print("Test file:", dst, flush=True)
+print("Removed records:", dict(removed), flush=True)
+
+for stash, shape in (
+    ("m01s00i253", (12, 85, 144, 192)),
+    ("m01s30i453", (12, 144, 192)),
+):
+    cubes = iris.load(dst, iris.AttributeConstraint(
+        STASH=lambda s, target=stash: str(s) == target
+    ))
+    assert len(cubes) == 1, (stash, len(cubes))
+    cube = cubes[0]
+    t = cube.coord("time")
+    dates = t.units.num2date(t.points)
+    assert cube.shape == shape, (stash, cube.shape)
+    assert [(d.year, d.month) for d in dates] == [
+        (3128, m) for m in range(1, 13)
+    ]
+    print(stash, "PASS:", cube.shape, "complete 12 months")
+
+print("PASS: test file validated; original file unchanged.")
+PY
+```
+
+After these checks, test the full ozone redistribution script using the cleaned file and a separate output directory. Only install the cleaned annual input after that test succeeds, keeping a backup of the original outside the input glob.
