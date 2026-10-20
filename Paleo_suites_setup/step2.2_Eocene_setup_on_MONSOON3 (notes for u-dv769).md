@@ -782,3 +782,19 @@ Update `config_rev` from `@postproc_2.5` to `@5723` in the existing `[env]` sect
 ```ini
 config_rev=@5723
 ```
+
+#### ValueError: pp files were not merged into a single cube
+
+```text
+ValueError: pp files were not merged into a single cube - this script needs to be updated to handle this case
+```
+
+**Reason:**
+The annual ozone diagnostic file `dv769a.po3128.pp` contained duplicate January-March records for density (`m01s00i253`) and tropopause altitude (`m01s30i453`). The duplicate data values and missing-data locations were identical, but their PP headers differed, so postproc retained both versions and `redistribute_ozone.py` loaded multiple cubes.
+
+This may have resulted from Mule being unavailable during an earlier postproc run, causing a fallback to Iris, followed by later updates using Mule. A controlled Iris rewrite reproduced the header values of the extra tropopause records, supporting this explanation; however, the historical fallback has not been confirmed from logs.
+
+**Resolution:**
+Back up the original annual PP file and use Mule to create a separate deduplicated file. For this file, retain the `LBPROJ=802` records after checking that duplicate data values and missing-data locations agree. Remove the 255 extra density records and three extra tropopause records, then verify that each field loads as one complete 12-month cube. The full ozone redistribution test succeeded with the cleaned file.
+
+Replace the annual PP input with the validated file and retrigger the failed `redistribute_ozone` task. Keep the ozone diagnostic writing process consistent with Mule, and check Mule availability in the postproc job environment to avoid mixing Mule and Iris output.
